@@ -453,6 +453,15 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
       <div class="login-logo">Ngonachi <span>Admin</span></div>
       <div class="login-sub">Set New Password</div>
       <div class="form-group">
+        <label class="form-label">Reset Code (from your email)</label>
+        <input type="text" class="form-input" id="resetToken" placeholder="e.g. A3BX9K"
+               style="letter-spacing:4px;text-transform:uppercase;text-align:center;font-size:1.2rem">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" id="resetEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
         <label class="form-label">New Password</label>
         <input type="password" class="form-input" id="resetPass" placeholder="Min. 8 characters">
       </div>
@@ -462,7 +471,16 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
       </div>
       <button class="login-btn" onclick="doResetPassword()">Update Password</button>
       <div class="login-error" id="resetError"></div>
-      <div class="login-success-msg" id="resetSuccess" style="display:none;color:#7DC57A;font-size:0.82rem;text-align:center;margin-top:1rem;line-height:1.7;padding:0.8rem;background:rgba(125,197,122,0.1);border-radius:4px;border:1px solid rgba(125,197,122,0.3)"></div>
+      <div class="login-success-msg" id="resetSuccess"
+           style="display:none;color:#7DC57A;font-size:0.82rem;text-align:center;
+                  margin-top:1rem;line-height:1.7;padding:0.8rem;
+                  background:rgba(125,197,122,0.1);border-radius:4px;
+                  border:1px solid rgba(125,197,122,0.3)"></div>
+      <div style="text-align:center;margin-top:1.2rem">
+        <span onclick="showLoginPanel()" style="font-size:0.78rem;color:rgba(255,255,255,0.45);cursor:pointer">
+          ← Back to Login
+        </span>
+      </div>
     </div>
 
   </div>
@@ -1603,13 +1621,17 @@ async function loadAdminDashboard() {
     const data = await res.json();
 
     if (data.success) {
+      // Update metric cards
       document.getElementById('m-total').textContent     = data.stats.total;
       document.getElementById('m-pending').textContent   = data.stats.pending;
       document.getElementById('m-confirmed').textContent = data.stats.confirmed;
       document.getElementById('m-completed').textContent = data.stats.completed;
-      if (data.recent  && data.recent.length)   DB.bookings = data.recent;
-      if (data.upcoming && data.upcoming.length) renderUpcomingFromAPI(data.upcoming);
+
+      // Store raw API bookings — normaliseBooking() handles field mapping
+      if (data.recent && data.recent.length) DB.bookings = data.recent;
+
       renderRecentTable();
+      if (data.upcoming && data.upcoming.length) renderUpcomingFromAPI(data.upcoming);
     }
   } catch (e) {
     console.warn('Dashboard load error:', e.message);
@@ -1722,8 +1744,12 @@ async function doForgotPassword() {
 }
 
 async function doResetPassword() {
-  const token    = new URLSearchParams(window.location.search).get('reset_token');
-  const email    = new URLSearchParams(window.location.search).get('email');
+  const params   = new URLSearchParams(window.location.search);
+  // Token can come from URL or typed manually
+  const token    = document.getElementById('resetToken').value.trim().toUpperCase()
+                   || params.get('reset_token');
+  const email    = document.getElementById('resetEmail').value.trim()
+                   || params.get('email') || '';
   const password = document.getElementById('resetPass').value.trim();
   const confirm  = document.getElementById('resetPassConfirm').value.trim();
   const errEl    = document.getElementById('resetError');
@@ -1733,6 +1759,16 @@ async function doResetPassword() {
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
+  if (!token) {
+    errEl.textContent   = 'Please enter the reset code from your email.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!email) {
+    errEl.textContent   = 'Please enter your email address.';
+    errEl.style.display = 'block';
+    return;
+  }
   if (!password || password.length < 8) {
     errEl.textContent   = 'Password must be at least 8 characters.';
     errEl.style.display = 'block';
@@ -1750,23 +1786,37 @@ async function doResetPassword() {
   try {
     const res  = await fetch(`${API_BASE}/auth/reset-password`, {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body:    JSON.stringify({ token, email, password, password_confirmation: confirm }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept':       'application/json',
+      },
+      body: JSON.stringify({
+        token,
+        email,
+        password,
+        password_confirmation: confirm,
+      }),
     });
+
     const data = await res.json();
 
     if (data.success) {
-      sucEl.textContent   = 'Password updated successfully! You can now log in.';
+      sucEl.textContent   = '✅ ' + data.message;
       sucEl.style.display = 'block';
+      // Clear URL params and go to login after 2.5 seconds
       setTimeout(() => {
-        // Clean URL and show login
         window.history.replaceState({}, '', window.location.pathname);
+        document.getElementById('resetToken').value       = '';
+        document.getElementById('resetEmail').value       = '';
+        document.getElementById('resetPass').value        = '';
+        document.getElementById('resetPassConfirm').value = '';
         showLoginPanel();
       }, 2500);
     } else {
-      errEl.textContent   = data.message || 'Reset failed. The link may have expired. Request a new one.';
+      errEl.textContent   = data.message || 'Reset failed. Please try again.';
       errEl.style.display = 'block';
     }
+
   } catch (e) {
     errEl.textContent   = 'Cannot reach server. Make sure Laravel is running.';
     errEl.style.display = 'block';
@@ -1777,7 +1827,6 @@ async function doResetPassword() {
 }
 
 // Check on page load if a reset token is in the URL
-// e.g. index.html?reset_token=abc123&email=admin@email.com
 window.addEventListener('load', () => {
   const params = new URLSearchParams(window.location.search);
   if (params.get('reset_token') && params.get('email')) {
@@ -1788,6 +1837,9 @@ window.addEventListener('load', () => {
     document.getElementById('loginPanel').style.display  = 'none';
     document.getElementById('forgotPanel').style.display = 'none';
     document.getElementById('resetPanel').style.display  = 'block';
+    // Auto-fill token and email from URL
+    document.getElementById('resetToken').value = params.get('reset_token').toUpperCase();
+    document.getElementById('resetEmail').value = params.get('email');
   }
 });
 
@@ -1821,12 +1873,30 @@ function renderDashboard() {
   renderUpcoming();
 }
 
+// Helper — normalise a booking object from API or local format
+function normaliseBooking(b) {
+  return {
+    id:       b.id       || b.reference || '—',
+    ref:      b.reference || b.id || '—',
+    name:     b.client_name    || b.name     || '—',
+    email:    b.client_email   || b.email    || '—',
+    phone:    b.client_phone   || b.phone    || '—',
+    pkg:      (b.package && b.package.name) || b.pkg || '—',
+    type:     b.event_type     || b.type     || '—',
+    date:     b.event_date     || b.date     || '',
+    location: b.event_location || b.location || '—',
+    notes:    b.notes          || '',
+    status:   b.status         || 'pending',
+    created:  b.created_at     || b.created  || '',
+  };
+}
+
 function renderRecentTable() {
   const t = document.getElementById('recentTable');
-  const recent = DB.bookings.slice(0,5);
+  const recent = DB.bookings.slice(0,5).map(normaliseBooking);
   t.innerHTML = `<thead><tr><th>ID</th><th>Client</th><th>Package</th><th>Date</th><th>Status</th></tr></thead>
   <tbody>${recent.map(b=>`<tr>
-    <td style="font-weight:500;color:var(--gold)">${b.id}</td>
+    <td style="font-weight:500;color:var(--gold)">${b.ref}</td>
     <td>${b.name}</td>
     <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.pkg}</td>
     <td>${fmtDate(b.date)}</td>
@@ -1836,54 +1906,94 @@ function renderRecentTable() {
 
 function renderUpcoming() {
   const ul = document.getElementById('upcomingList');
-  const upcoming = DB.bookings.filter(b=>b.status!=='rejected'&&b.status!=='completed').sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
-  ul.innerHTML = upcoming.map(b=>{
-    const d=new Date(b.date); const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const upcoming = DB.bookings
+    .map(normaliseBooking)
+    .filter(b => b.status !== 'rejected' && b.status !== 'completed')
+    .sort((a,b) => a.date.localeCompare(b.date))
+    .slice(0,5);
+  ul.innerHTML = upcoming.map(b => {
+    const d = new Date(b.date + 'T00:00:00');
     return `<div class="upcoming-item">
-      <div class="upcoming-date"><div class="upcoming-day">${d.getDate()}</div><div class="upcoming-mon">${months[d.getMonth()]}</div></div>
-      <div class="upcoming-info"><div class="upcoming-name">${b.name}</div><div class="upcoming-pkg">${b.pkg}</div></div>
+      <div class="upcoming-date">
+        <div class="upcoming-day">${d.getDate()}</div>
+        <div class="upcoming-mon">${months[d.getMonth()]}</div>
+      </div>
+      <div class="upcoming-info">
+        <div class="upcoming-name">${b.name}</div>
+        <div class="upcoming-pkg">${b.pkg}</div>
+      </div>
       <span class="status-badge status-${b.status}">${b.status}</span>
     </div>`;
   }).join('');
 }
 
-function renderPanel(panel) {
-  if(panel==='dashboard') renderDashboard();
-  else if(panel==='bookings-admin') renderBookingsTable();
-  else if(panel==='clients') renderClientsTable();
-  else if(panel==='packages-admin') renderPackagesTable();
-  else if(panel==='messages') renderMessagesTable();
+async function renderPanel(panel) {
+  if (panel === 'dashboard')       { renderDashboard(); await loadAdminDashboard(); }
+  else if (panel === 'bookings-admin') { await loadAllBookings(); renderBookingsTable(); }
+  else if (panel === 'clients')        { await loadAllBookings(); renderClientsTable(); }
+  else if (panel === 'packages-admin') renderPackagesTable();
+  else if (panel === 'messages')       renderMessagesTable();
+}
+
+async function loadAllBookings() {
+  if (!adminToken) return;
+  try {
+    const res  = await fetch(`${API_BASE}/admin/bookings?per_page=100`, {
+      headers: {
+        'Authorization': `Bearer ${adminToken}`,
+        'Accept':        'application/json',
+      },
+    });
+    const data = await res.json();
+    if (data.success && data.bookings) {
+      DB.bookings = data.bookings.data || data.bookings;
+    }
+  } catch (e) {
+    console.warn('Load bookings error:', e.message);
+  }
 }
 
 function renderBookingsTable() {
-  const filter = document.getElementById('bookingFilter')?.value || 'all';
-  const bookings = filter==='all' ? DB.bookings : DB.bookings.filter(b=>b.status===filter);
-  document.getElementById('bookingCount').textContent = `${bookings.length} booking${bookings.length!==1?'s':''}`;
+  const filter   = document.getElementById('bookingFilter')?.value || 'all';
+  const bookings = (filter === 'all' ? DB.bookings : DB.bookings.filter(b => b.status === filter))
+                    .map(normaliseBooking);
+  document.getElementById('bookingCount').textContent = `${bookings.length} booking${bookings.length !== 1 ? 's' : ''}`;
   const t = document.getElementById('allBookingsTable');
   t.innerHTML = `<thead><tr><th>ID</th><th>Client</th><th>Phone</th><th>Package</th><th>Date</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
-  <tbody>${bookings.map(b=>`<tr>
-    <td style="font-weight:500;color:var(--gold)">${b.id}</td>
-    <td><div style="font-weight:500">${b.name}</div><div style="font-size:0.75rem;color:var(--text-muted)">${b.email}</div></td>
+  <tbody>${bookings.map(b => `<tr>
+    <td style="font-weight:500;color:var(--gold)">${b.ref}</td>
+    <td>
+      <div style="font-weight:500">${b.name}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted)">${b.email}</div>
+    </td>
     <td style="font-size:0.82rem">${b.phone}</td>
     <td style="max-width:160px;font-size:0.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.pkg}</td>
     <td style="font-size:0.82rem;white-space:nowrap">${fmtDate(b.date)}</td>
     <td style="font-size:0.82rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.location}</td>
     <td><span class="status-badge status-${b.status}">${b.status}</span></td>
     <td style="white-space:nowrap;display:flex;gap:4px;flex-wrap:wrap">
-      ${b.status==='pending'?`<button class="action-btn action-approve" onclick="updateBooking('${b.id}','confirmed')">Approve</button><button class="action-btn action-reject" onclick="updateBooking('${b.id}','rejected')">Reject</button>`:''}
-      ${b.status==='confirmed'?`<button class="action-btn action-complete" onclick="updateBooking('${b.id}','completed')">Complete</button>`:''}
-      <button class="action-btn action-delete" onclick="deleteBooking('${b.id}')">Delete</button>
+      ${b.status === 'pending'    ? `<button class="action-btn action-approve"  onclick="updateBooking(${b.id},'confirmed')">Approve</button><button class="action-btn action-reject" onclick="updateBooking(${b.id},'rejected')">Reject</button>` : ''}
+      ${b.status === 'confirmed'  ? `<button class="action-btn action-complete" onclick="updateBooking(${b.id},'completed')">Complete</button>` : ''}
+      <button class="action-btn action-delete" onclick="deleteBooking(${b.id})">Delete</button>
     </td>
   </tr>`).join('')}</tbody>`;
 }
 
 function renderClientsTable() {
-  const clients = [...new Map(DB.bookings.map(b=>[b.email,b])).values()];
-  const t = document.getElementById('clientsTable');
-  t.innerHTML=`<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th><th>Last Booking</th></tr></thead>
-  <tbody>${clients.map(c=>{
-    const count = DB.bookings.filter(b=>b.email===c.email).length;
-    return `<tr><td style="font-weight:500">${c.name}</td><td style="color:var(--gold)">${c.email}</td><td>${c.phone}</td><td>${count}</td><td>${fmtDate(c.date||c.created)}</td></tr>`;
+  const normalised = DB.bookings.map(normaliseBooking);
+  const clients    = [...new Map(normalised.map(b => [b.email, b])).values()];
+  const t          = document.getElementById('clientsTable');
+  t.innerHTML = `<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th><th>Last Booking</th></tr></thead>
+  <tbody>${clients.map(c => {
+    const count = normalised.filter(b => b.email === c.email).length;
+    return `<tr>
+      <td style="font-weight:500">${c.name}</td>
+      <td style="color:var(--gold)">${c.email}</td>
+      <td>${c.phone}</td>
+      <td>${count}</td>
+      <td>${fmtDate(c.date || c.created)}</td>
+    </tr>`;
   }).join('')}</tbody>`;
 }
 
