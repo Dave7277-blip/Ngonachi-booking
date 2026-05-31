@@ -10,7 +10,8 @@
                   border:1px solid #E8D5B0; border-radius:8px; overflow:hidden; }
     .header     { background:#1A1612; padding:32px; text-align:center; }
     .logo       { color:#C9A96E; font-size:26px; letter-spacing:6px; margin:0; }
-    .tagline    { color:rgba(255,255,255,0.4); font-size:11px; letter-spacing:3px; margin-top:6px; }
+    .tagline    { color:rgba(255,255,255,0.4); font-size:11px;
+                  letter-spacing:3px; margin-top:6px; }
     .body       { padding:36px; }
     h2          { color:#1A1612; font-weight:400; margin-top:0; font-size:22px; }
     p           { color:#4A4035; line-height:1.85; font-size:15px; }
@@ -29,14 +30,16 @@
     .footer { background:#1A1612; padding:22px; text-align:center;
               color:rgba(255,255,255,0.4); font-size:12px; }
     .footer a { color:#C9A96E; text-decoration:none; }
+    .social-row { margin-top:10px; }
+    .social-row a { color:#C9A96E; text-decoration:none; margin:0 6px; font-size:12px; }
   </style>
 </head>
 <body>
   <div class="wrapper">
 
     <div class="header">
-      <p class="logo">LUMIÈRE</p>
-      <p class="tagline">STUDIOS</p>
+      <p class="logo">NGONACHI</p>
+      <p class="tagline">PIX PHOTOGRAPHY</p>
     </div>
 
     <div class="body">
@@ -44,25 +47,27 @@
       @if($booking->status === 'confirmed')
         <h2>Great News, {{ $booking->client_name }}! 🎉</h2>
         <p>
-          We are delighted to confirm your booking. Your date is now secured
-          with Lumière Studios. We look forward to capturing your special moments!
+          We are delighted to confirm your booking with Ngonachi Pix Photography.
+          Your date is now secured and we look forward to capturing your special moments!
         </p>
       @elseif($booking->status === 'completed')
         <h2>Thank You, {{ $booking->client_name }}!</h2>
         <p>
           Your event has been marked as completed. Your edited photographs will
-          be delivered to your online gallery as agreed in your package.
+          be delivered as per your package agreement. Thank you for choosing
+          Ngonachi Pix Photography!
         </p>
       @elseif($booking->status === 'rejected')
         <h2>Booking Update — {{ $booking->client_name }}</h2>
         <p>
-          Unfortunately, we are unable to accommodate your booking at this time.
+          Unfortunately we are unable to accommodate your booking at this time.
           Please contact us directly so we can explore alternative dates or options.
         </p>
       @endif
 
       <div class="ref-box">
-        <strong>Reference:</strong> {{ $booking->reference }} &nbsp;|&nbsp;
+        <strong>Reference:</strong> {{ $booking->reference }}
+        &nbsp;|&nbsp;
         <span class="status-badge status-{{ $booking->status }}">
           {{ ucfirst($booking->status) }}
         </span>
@@ -90,16 +95,25 @@
       </table>
 
       <p style="font-size:14px;">
-        Questions? Email us at
-        <a href="mailto:hello@lumiere.co.tz" style="color:#C9A96E;">hello@lumiere.co.tz</a>
-        or call <strong>+255 754 123 456</strong>.
+        Questions? Contact us at
+        <a href="mailto:ngonachi62@gmail.com" style="color:#C9A96E;">
+          ngonachi62@gmail.com
+        </a>
+        or call <strong>+255 621 018 229</strong>.
       </p>
 
+      <p style="font-size:13px;color:#8C7B6B;">Follow us for our latest work:</p>
+      <div class="social-row">
+        <a href="https://www.instagram.com/ngonachi_pix/" target="_blank">📷 Instagram</a>
+        <a href="https://www.tiktok.com/@ngonachi_pix" target="_blank">🎵 TikTok</a>
+        <a href="https://wa.me/255621018229" target="_blank">💬 WhatsApp</a>
+      </div>
     </div>
 
     <div class="footer">
-      &copy; {{ date('Y') }} Lumière Studios &bull; Masaki, Dar es Salaam, Tanzania<br>
-      <a href="mailto:hello@lumiere.co.tz">hello@lumiere.co.tz</a>
+      &copy; {{ date('Y') }} Ngonachi Pix Photography &bull; Arusha, Tanzania<br>
+      <a href="mailto:ngonachi62@gmail.com">ngonachi62@gmail.com</a>
+      &bull; +255 621 018 229
     </div>
 
   </div>

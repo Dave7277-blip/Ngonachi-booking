@@ -7,8 +7,7 @@
   <style>
     body        { margin:0; padding:0; background:#F0EDE8; font-family:'Georgia',serif; }
     .wrapper    { max-width:580px; margin:40px auto; background:#ffffff;
-                  border-radius:8px; overflow:hidden;
-                  border:2px solid #C9A96E; }
+                  border-radius:8px; overflow:hidden; border:2px solid #C9A96E; }
     .header     { background:#1A1612; padding:28px 32px;
                   display:flex; align-items:center; justify-content:space-between; }
     .logo       { color:#C9A96E; font-size:22px; letter-spacing:4px; margin:0; }
@@ -46,15 +45,15 @@
 <div class="wrapper">
 
   <div class="header">
-    <p class="logo">LUMIÈRE</p>
+    <p class="logo">NGONACHI PIX</p>
     <span class="alert-badge">NEW BOOKING</span>
   </div>
 
   <div class="body">
     <h2>New Booking Request Received!</h2>
     <p style="color:#4A4035;font-size:14px;line-height:1.8;margin-bottom:20px">
-      A new photography booking has just been submitted and is awaiting your review.
-      Please log in to the admin dashboard to approve or reject it.
+      A new photography booking has been submitted and is awaiting your review.
+      Log in to the admin dashboard to approve or reject it.
     </p>
 
     <div class="ref-box">
@@ -64,25 +63,29 @@
     </div>
 
     <table class="detail-table">
-      <tr>
-        <th colspan="2">Client Details</th>
-      </tr>
+      <tr><th colspan="2">Client Details</th></tr>
       <tr>
         <td style="width:140px;color:#8C7B6B">Full Name</td>
         <td><strong>{{ $booking->client_name }}</strong></td>
       </tr>
       <tr>
         <td style="color:#8C7B6B">Email</td>
-        <td><a href="mailto:{{ $booking->client_email }}" style="color:#C9A96E">{{ $booking->client_email }}</a></td>
+        <td>
+          <a href="mailto:{{ $booking->client_email }}" style="color:#C9A96E">
+            {{ $booking->client_email }}
+          </a>
+        </td>
       </tr>
       <tr>
         <td style="color:#8C7B6B">Phone</td>
-        <td><a href="tel:{{ $booking->client_phone }}" style="color:#C9A96E">{{ $booking->client_phone }}</a></td>
+        <td>
+          <a href="tel:{{ $booking->client_phone }}" style="color:#C9A96E">
+            {{ $booking->client_phone }}
+          </a>
+        </td>
       </tr>
 
-      <tr>
-        <th colspan="2" style="padding-top:20px">Event Details</th>
-      </tr>
+      <tr><th colspan="2" style="padding-top:20px">Event Details</th></tr>
       <tr>
         <td style="color:#8C7B6B">Event Type</td>
         <td>{{ ucfirst($booking->event_type) }}</td>
@@ -115,15 +118,16 @@
       </tr>
     </table>
 
-    <a href="{{ env('APP_URL', 'http://localhost:8000') }}/admin/bookings" class="action-btn">
-      View in Dashboard →
+    <a href="{{ env('FRONTEND_URL', 'http://127.0.0.1:5500') }}/index.html" class="action-btn">
+      Log in to Dashboard →
     </a>
   </div>
 
   <div class="footer">
-    This is an automated notification from your Lumière Studios booking system.<br>
-    <a href="mailto:hello@lumiere.co.tz">hello@lumiere.co.tz</a>
-    &bull; +255 754 123 456
+    Ngonachi Pix Photography &bull; Arusha, Tanzania<br>
+    <a href="mailto:ngonachi62@gmail.com">ngonachi62@gmail.com</a>
+    &bull; +255 621 018 229<br><br>
+    This is an automated notification from your booking system.
   </div>
 
 </div>
