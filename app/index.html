@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Lumière Studios - Professional Wedding & Send-off Photography. Book your perfect moment.">
 <title>Ngonachi Pix | Wedding & Send-off Photography</title>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -1114,25 +1115,18 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
 // ═══════════════════════════════════════
 const DB = {
   bookings: [
-    {id:'BK001',name:'Amina Hassan',email:'amina@email.com',phone:'+255712345678',type:'wedding',pkg:'Gold Wedding Package',date:'2025-08-15',location:'Serena Hotel, Dar es Salaam',notes:'Outdoor ceremony preferred',status:'confirmed',created:'2025-06-01'},
-    {id:'BK002',name:'Fatuma Osei',email:'fatuma@email.com',phone:'+255723456789',type:'sendoff',pkg:'Premium Send-off Package',date:'2025-07-22',location:'White Sands Hotel, Dar es Salaam',notes:'',status:'pending',created:'2025-06-03'},
-    {id:'BK003',name:'Grace Kimani',email:'grace@email.com',phone:'+255734567890',type:'wedding',pkg:'Platinum Wedding Package',date:'2025-09-05',location:'Arusha Coffee Lodge, Arusha',notes:'Drone shots required',status:'confirmed',created:'2025-05-28'},
-    {id:'BK004',name:'David Mwangi',email:'david@email.com',phone:'+255745678901',type:'sendoff',pkg:'Classic Send-off Package',date:'2025-07-10',location:'Karibu Inn, Zanzibar',notes:'',status:'completed',created:'2025-05-20'},
-    {id:'BK005',name:'Leila Abdi',email:'leila@email.com',phone:'+255756789012',type:'wedding',pkg:'Silver Wedding Package',date:'2025-10-18',location:'Slipway, Dar es Salaam',notes:'Small intimate ceremony, 50 guests',status:'pending',created:'2025-06-05'},
-    {id:'BK006',name:'Joseph Otieno',email:'joseph@email.com',phone:'+255767890123',type:'wedding',pkg:'Gold Wedding Package',date:'2025-11-01',location:'Hyatt Regency, Dar es Salaam',notes:'',status:'pending',created:'2025-06-07'},
-    {id:'BK007',name:'Zara Juma',email:'zara@email.com',phone:'+255778901234',type:'sendoff',pkg:'Premium Send-off Package',date:'2025-08-30',location:'Kunduchi Beach Hotel',notes:'Sunset photos required',status:'confirmed',created:'2025-06-02'},
+    
   ],
   messages:[
-    {id:'M001',name:'Rahel Tesfaye',email:'rahel@email.com',subject:'Wedding Date Inquiry',message:'Hi, is September 20th 2025 still available for a wedding shoot?',date:'2025-06-07',read:false},
-    {id:'M002',name:'Baraka Mwamba',email:'baraka@email.com',subject:'Package Customization',message:"I'd like to combine the Gold wedding package with drone coverage. Is this possible?",date:'2025-06-05',read:true},
-    {id:'M003',name:'Sophia Ndung\'u',email:'sophia@email.com',subject:'Portfolio Request',message:'Could you please share more examples of indoor wedding photography?',date:'2025-06-03',read:true},
+    
   ],
   packages:[
-    {id:'P001',name:'Silver Wedding Package',type:'Wedding',price:'TZS 1,200,000',status:'Active'},
-    {id:'P002',name:'Gold Wedding Package',type:'Wedding',price:'TZS 2,500,000',status:'Active'},
-    {id:'P003',name:'Platinum Wedding Package',type:'Wedding',price:'TZS 4,800,000',status:'Active'},
-    {id:'P004',name:'Classic Send-off Package',type:'Send-off',price:'TZS 800,000',status:'Active'},
-    {id:'P005',name:'Premium Send-off Package',type:'Send-off',price:'TZS 1,600,000',status:'Active'},
+    {id:'P001',name:'Classical Elegance Package',type:'Wedding',price:'TZS 900,000',status:'Active'},
+    {id:'P002',name:'Timeless Memories Package',type:'Wedding',price:'TZS 1,600,000',status:'Active'},
+    {id:'P003',name:'Royal Celebration Package',type:'Wedding',price:'TZS 2,300,000',status:'Active'},
+    {id:'P004',name:'Sweet Farewell Package',type:'Send-off',price:'TZS 900,000',status:'Active'},
+    {id:'P005',name:'Golden Journey Package',type:'Send-off',price:'TZS 1,600,000',status:'Active'},
+    {id:'P006',name:'Grand Departure Package',type:'Send-off',price:'TZS 2,300,000',status:'Active'}, 
   ]
 };
 
