@@ -75,12 +75,9 @@ nav.light-nav .nav-logo,.nav.light-nav .nav-link{color:var(--dark)}
 nav.light-nav .hamburger span{background:var(--dark)}
 
 /* ── SECTIONS ── */
-section{display:none}
-section.active{display:block}
-.section-visible{display:block}
 
 /* ── HERO ── */
-#home{display:block}
+
 .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg-img{width:100%;height:100%;object-fit:cover;object-position:center}
@@ -490,14 +487,14 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
 <!-- NAV -->
 <nav id="mainNav">
   <div class="nav-inner">
-    <div class="nav-logo" onclick="showPage('home')" style="cursor:pointer">Ngonachi <span>Pix</span></div>
+    <div class="nav-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})" style="cursor:pointer">Ngonachi <span>Pix</span></div>
     <div class="nav-links">
-      <a class="nav-link" onclick="showPage('home')">Home</a>
-      <a class="nav-link" onclick="showPage('packages')">Packages</a>
-      <a class="nav-link" onclick="showPage('gallery')">Gallery</a>
-      <a class="nav-link" onclick="showPage('bookings')">Book Now</a>
-      <a class="nav-link" onclick="showPage('about')">About</a>
-      <a class="nav-link" onclick="showPage('contact')">Contact</a>
+      <a class="nav-link" href="#home">Home</a>
+      <a class="nav-link" href="#packages">Packages</a>
+      <a class="nav-link" href="#gallery">Gallery</a>
+      <a class="nav-link" href="#bookings">Book Now</a>
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#contact">Contact</a>
       <a class="nav-cta" onclick="showAdmin()">Admin</a>
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -508,17 +505,17 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a class="nav-link" onclick="showPage('home');closeMenu()">Home</a>
-  <a class="nav-link" onclick="showPage('packages');closeMenu()">Packages</a>
-  <a class="nav-link" onclick="showPage('gallery');closeMenu()">Gallery</a>
-  <a class="nav-link" onclick="showPage('bookings');closeMenu()">Book Now</a>
-  <a class="nav-link" onclick="showPage('about');closeMenu()">About</a>
-  <a class="nav-link" onclick="showPage('contact');closeMenu()">Contact</a>
+  <a class="nav-link" href="#home" onclick="closeMenu()">Home</a>
+  <a class="nav-link" href="#packages" onclick="closeMenu()">Packages</a>
+  <a class="nav-link" href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a class="nav-link" href="#bookings" onclick="closeMenu()">Book Now</a>
+  <a class="nav-link" href="#about" onclick="closeMenu()">About</a>
+  <a class="nav-link" href="#contact" onclick="closeMenu()">Contact</a>
   <a class="nav-cta" onclick="showAdmin();closeMenu()">Admin Login</a>
 </div>
 
 <!-- ═══════════ HOME ═══════════ -->
-<section id="home">
+<section id="home" style="display:block">
   <!-- HERO -->
   <div class="hero">
     <div class="hero-bg">
@@ -557,8 +554,8 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
       <h1 class="hero-title">Capturing <em>Forever</em><br>Moments</h1>
       <p class="hero-subtitle">Luxury wedding & send-off photography that tells your unique love story through every breathtaking frame</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="showPage('bookings')">Book Your Session</button>
-        <button class="btn-outline" onclick="showPage('gallery')">View Gallery</button>
+        <button class="btn-primary" onclick="window.scrollTo({top: document.getElementById('bookings').offsetTop, behavior:'smooth'})">Book Your Session</button>
+        <button class="btn-outline" onclick="window.scrollTo({top: document.getElementById('gallery').offsetTop, behavior:'smooth'})">View Gallery</button>
       </div>
     </div>
     <div class="hero-scroll">
@@ -966,15 +963,15 @@ footer{background:var(--dark);color:rgba(255,255,255,0.6);padding:4rem 2rem 2rem
       </div>
       <div class="footer-col">
         <h4>Services</h4>
-        <span class="footer-link" onclick="showPage('packages')">Wedding Photography</span>
-        <span class="footer-link" onclick="showPage('packages')">Send-off Photography</span>
-        <span class="footer-link" onclick="showPage('bookings')">Booking</span>
+        <span class="footer-link" onclick="document.getElementById('packages').scrollIntoView({behaviour:'smooth'})">Wedding Photography</span>
+        <span class="footer-link" onclick="document.getElementById('send-off').scrollIntoView({behaviour:'smooth'})">Send-off Photography</span>
+        <span class="footer-link" onclick="document.getElementById('bookings').scrollIntoView({behaviour:'smooth'})">Booking</span>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <span class="footer-link" onclick="showPage('about')">About Us</span>
-        <span class="footer-link" onclick="showPage('gallery')">Portfolio</span>
-        <span class="footer-link" onclick="showPage('contact')">Contact</span>
+        <span class="footer-link" onclick="document.getElementById('about').scrollIntoView({behaviour:'smooth'})">About Us</span>
+        <span class="footer-link" onclick="document.getElementById('gallery').scrollIntoView({behaviour:'smooth'})">Portfolio</span>
+        <span class="footer-link" onclick="document.getElementById('contact').scrollIntoView({behaviour:'smooth'})">Contact</span>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
@@ -1235,7 +1232,12 @@ function exitAdmin() {
   adminEl.style.cssText = 'display:none;';
   adminEl.classList.remove('active');
 
-  showPage('home');
+  window.scrollTo({top:0, behavior:'smooth'});
+  // Show all sections again
+  ['home','packages','gallery','bookings','about','contact'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'block';
+  });
 }
 
 // ═══════════════════════════════════════
@@ -1271,7 +1273,7 @@ function switchPkg(type, btn) {
 }
 
 function bookPackage(pkgName, price, type) {
-  showPage('bookings');
+  document.getElementById('bookings').scrollIntoView({ behavior: 'smooth' });
   setTimeout(()=>{
     const pkgSelect = document.getElementById('bk-pkg');
     const typeSelect = document.getElementById('bk-type');
@@ -2099,11 +2101,8 @@ function showToast(msg, type='success') {
 // ═══════════════════════════════════════
 window.addEventListener('load',()=>{
   setTimeout(()=>document.getElementById('loader').classList.add('hidden'), 1200);
-  // Show only home initially
-  publicPages.forEach(p=>{
-    const el=document.getElementById(p);
-    if(el) el.style.display = p==='home'?'block':'none';
-  });
+  // All sections visible for single page scrolling
+  
   document.getElementById('admin').style.display='none';
   renderGallery('all');
   // Set min date for booking form
