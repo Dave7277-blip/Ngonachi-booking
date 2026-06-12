@@ -49,8 +49,8 @@ nav.stuck{background:rgba(10,10,10,0.92);backdrop-filter:blur(18px);border-botto
 .nav-cta:hover{background:var(--accent);border-color:transparent;color:var(--white)}
 .ham{display:none;flex-direction:column;gap:5px;padding:4px;z-index:1100}
 .ham span{display:block;width:22px;height:1.5px;background:var(--white);transition:all var(--ease)}
-.mob-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;transition:opacity var(--ease)}
-.mob-menu.open{opacity:1}.mob-menu .nav-a{font-size:1.3rem;color:var(--white)}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;transition:opacity var(--ease);pointer-events:none}
+.mob-menu.open{opacity:1;pointer-events:auto}.mob-menu .nav-a{font-size:1.3rem;color:var(--white)}
 
 .section-tag{font-size:0.68rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.7rem}
 .section-tag::before,.section-tag::after{content:'';display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.15)}
