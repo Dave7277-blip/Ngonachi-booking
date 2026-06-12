@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,337 +7,263 @@
 <title>Ngonachi Pix | Wedding & Send-off Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#C8973A;
-  --gold2:#E8B96A;
-  --gold3:#F5D99A;
-  --ink:#0A0810;
-  --ink2:#130F20;
-  --ink3:#1E1830;
-  --surface:#16112A;
-  --surface2:#1F1840;
-  --violet:#3D1A6E;
-  --violet2:#5C2FA0;
-  --text:#D8D0EC;
-  --muted:#7A6F96;
-  --white:#F8F4FF;
-  --border:rgba(200,151,58,0.18);
-  --border2:rgba(200,151,58,0.35);
-  --glow:rgba(200,151,58,0.12);
-  --r:6px;
-  --r2:14px;
-  --r3:22px;
-  --nav-h:72px;
-  --serif:'Playfair Display',serif;
-  --sans:'Inter',sans-serif;
-  --ease:0.4s cubic-bezier(0.4,0,0.2,1);
-}
+:root{--ink:#0a0a0a;--ink2:#111;--ink3:#1a1a1a;--surface:#222;--surface2:#2a2a2a;--text:#f0f0f0;--muted:#888;--white:#fff;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--accent:linear-gradient(135deg,#7c3aed,#ec4899);--purple:#7c3aed;--purple2:#a78bfa;--pink:#ec4899;--glow:rgba(124,58,237,0.12);--r:6px;--r2:14px;--r3:22px;--nav-h:72px;--serif:'Playfair Display',serif;--sans:'Inter',sans-serif;--ease:0.4s cubic-bezier(0.4,0,0.2,1)}
 html{scroll-behavior:smooth;font-size:16px;background:var(--ink)}
 body{font-family:var(--sans);color:var(--text);background:var(--ink);overflow-x:hidden;line-height:1.7}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-ul{list-style:none}
-button{cursor:pointer;font-family:var(--sans);border:none;background:none}
+img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
+ul{list-style:none}button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--ink)}
-::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+::selection{background:rgba(124,58,237,0.3);color:var(--white)}
 
-/* LOADER */
 #loader{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.7s,visibility 0.7s}
 #loader.gone{opacity:0;visibility:hidden;pointer-events:none}
 .ld-inner{text-align:center}
-.ld-word{font-family:var(--serif);font-size:2.8rem;color:var(--gold);letter-spacing:0.1em;opacity:0;animation:ldIn 0.8s ease 0.2s forwards}
-.ld-bar{width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold3));margin:14px auto 0;border-radius:1px;animation:ldBar 1s ease 0.6s forwards}
-@keyframes ldIn{to{opacity:1}}
-@keyframes ldBar{to{width:120px}}
+.ld-word{font-family:var(--serif);font-size:2.8rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em;opacity:0;animation:ldIn 0.8s ease 0.2s forwards}
+.ld-bar{width:0;height:2px;background:var(--accent);margin:14px auto 0;border-radius:1px;animation:ldBar 1s ease 0.6s forwards}
+@keyframes ldIn{to{opacity:1}}@keyframes ldBar{to{width:120px}}
 
-/* NAV */
+#lightbox{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px)}
+#lightbox.show{display:flex}
+#lightboxImg{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 80px rgba(0,0,0,0.8)}
+.lb-close{position:absolute;top:1.5rem;right:2rem;color:var(--white);font-size:2rem;cursor:pointer;background:none;border:none;z-index:1;opacity:0.5;transition:opacity var(--ease);line-height:1}
+.lb-close:hover{opacity:1}
+
 nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;transition:background var(--ease),backdrop-filter var(--ease)}
-nav.stuck{background:rgba(10,8,16,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+nav.stuck{background:rgba(10,10,10,0.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .nav-in{max-width:1280px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-family:var(--serif);font-size:1.55rem;font-weight:400;color:var(--white);letter-spacing:0.05em}
-.nav-logo em{color:var(--gold);font-style:normal}
+.nav-logo em{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
 .nav-links{display:flex;align-items:center;gap:2rem}
-.nav-a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(248,244,255,0.7);transition:color var(--ease);position:relative}
-.nav-a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform var(--ease)}
-.nav-a:hover{color:var(--gold2)}
+.nav-a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color var(--ease);position:relative}
+.nav-a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--purple2);transform:scaleX(0);transform-origin:left;transition:transform var(--ease)}
+.nav-a:hover{color:var(--white)}
 .nav-a:hover::after{transform:scaleX(1)}
-.nav-cta{padding:0.55rem 1.4rem;border:1px solid var(--gold);color:var(--gold);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;border-radius:30px;transition:all var(--ease)}
-.nav-cta:hover{background:var(--gold);color:var(--ink)}
+.nav-cta{padding:0.55rem 1.4rem;border:1px solid rgba(255,255,255,0.2);color:var(--white);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;border-radius:30px;transition:all var(--ease)}
+.nav-cta:hover{background:var(--accent);border-color:transparent;color:var(--white)}
 .ham{display:none;flex-direction:column;gap:5px;padding:4px;z-index:1100}
 .ham span{display:block;width:22px;height:1.5px;background:var(--white);transition:all var(--ease)}
-.mob-menu{display:none;position:fixed;inset:0;background:rgba(10,8,16,0.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;transition:opacity var(--ease)}
-.mob-menu.open{opacity:1}
-.mob-menu .nav-a{font-size:1.3rem;color:var(--white)}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;transition:opacity var(--ease)}
+.mob-menu.open{opacity:1}.mob-menu .nav-a{font-size:1.3rem;color:var(--white)}
 
-/* SECTION UTILS */
-.section-tag{font-size:0.68rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.7rem}
-.section-tag::before,.section-tag::after{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);opacity:0.6}
+.section-tag{font-size:0.68rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.7rem}
+.section-tag::before,.section-tag::after{content:'';display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.15)}
 .section-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.15;color:var(--white)}
-.section-h em{font-style:italic;color:var(--gold2)}
-.gold-line{width:50px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold3));margin:1.2rem 0;border-radius:1px}
-.center-block{text-align:center}
-.center-block .gold-line{margin:1.2rem auto}
+.section-h em{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
+.gold-line{width:50px;height:2px;background:var(--accent);margin:1.2rem 0;border-radius:1px}
+.center-block{text-align:center}.center-block .gold-line{margin:1.2rem auto}
 
-/* ======= HERO ======= */
 #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-
-/* CINEMATIC GRAIN */
-#hero::before{
-  content:'';position:absolute;inset:0;z-index:4;pointer-events:none;
-  opacity:0.05;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation:grainShift 0.6s steps(4) infinite;
-}
-@keyframes grainShift{
-  0%{transform:translate(0,0)}
-  25%{transform:translate(-2%,1%)}
-  50%{transform:translate(1%,-2%)}
-  75%{transform:translate(-1%,2%)}
-  100%{transform:translate(0,0)}
-}
-
-/* VIGNETTE */
-#hero::after{
-  content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
-  background:radial-gradient(ellipse at center, transparent 35%, rgba(10,8,16,0.75) 100%);
-}
-
-/* LENS FLARE GLOW */
-.lens-flare{
-  position:absolute;z-index:2;pointer-events:none;border-radius:50%;
-  filter:blur(2px);mix-blend-mode:screen;
-}
-.lf-1{width:420px;height:420px;top:8%;right:10%;
-  background:radial-gradient(circle,rgba(232,185,106,0.18) 0%,transparent 65%);
-  animation:flarePulse 6s ease-in-out infinite;}
-.lf-2{width:180px;height:180px;top:22%;right:18%;
-  background:radial-gradient(circle,rgba(200,151,58,0.35) 0%,transparent 70%);
-  animation:flarePulse 6s ease-in-out infinite 0.8s;}
-.lf-3{width:60px;height:60px;top:32%;right:24%;
-  background:radial-gradient(circle,rgba(248,244,255,0.5) 0%,transparent 70%);
-  animation:flarePulse 4s ease-in-out infinite 1.2s;}
-@keyframes flarePulse{
-  0%,100%{opacity:0.5;transform:scale(1)}
-  50%{opacity:0.9;transform:scale(1.15)}
-}
-
-/* PARALLAX LAYERS */
-.hero-canvas{transition:transform 0.2s ease-out}
-.hero-camera{position:absolute;z-index:2;pointer-events:none;opacity:0.85;
-  animation:cameraFloat 8s ease-in-out infinite;}
-@keyframes cameraFloat{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-12px) rotate(-1deg)}
-}
-
-/* FILM STRIP */
-.filmstrip{position:absolute;z-index:2;pointer-events:none;opacity:0.35}
-.filmstrip-left{left:0;top:0;bottom:0;width:46px}
-.filmstrip-right{right:0;top:0;bottom:0;width:46px}
-.hero-canvas{position:absolute;inset:0;z-index:0}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,8,16,0.35) 0%,rgba(10,8,16,0.2) 40%,rgba(10,8,16,0.8) 100%);z-index:1}
-.hero-body{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:900px;animation:heroUp 1.2s ease 0.5s both}
+#hero::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0.04;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grainShift 0.6s steps(4) infinite}
+@keyframes grainShift{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(-1%,2%)}100%{transform:translate(0,0)}}
+#hero::before{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,rgba(10,10,10,0.75) 100%)}
+.hero-bg{position:absolute;inset:0;z-index:0;background:url('images/w1.jpg') center/cover no-repeat;transform:scale(1.1);filter:saturate(1.05)}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,10,10,0.35) 0%,rgba(10,10,10,0.15) 40%,rgba(10,10,10,0.85) 100%)}
+.hero-glow{position:absolute;z-index:2;pointer-events:none;border-radius:50%}
+.hero-glow.hg-1{width:500px;height:500px;top:-5%;right:5%;background:radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 65%);animation:pulseSlow 6s ease-in-out infinite}
+.hero-glow.hg-2{width:300px;height:300px;bottom:10%;left:5%;background:radial-gradient(circle,rgba(236,72,153,0.08) 0%,transparent 65%);animation:pulseSlow 6s ease-in-out infinite 1s}
+@keyframes pulseSlow{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:0.9;transform:scale(1.12)}}
+.hero-body{position:relative;z-index:5;text-align:center;padding:0 1.5rem;max-width:900px;animation:heroUp 1.2s ease 0.5s both}
 @keyframes heroUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-.hero-tag{font-size:0.72rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.5rem;opacity:0.9}
+.hero-tag{font-size:0.72rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--purple2);margin-bottom:1.5rem;opacity:0.9}
 .hero-h{font-family:var(--serif);font-size:clamp(3.2rem,8vw,6.5rem);font-weight:400;line-height:1.05;color:var(--white);margin-bottom:1.2rem}
-.hero-h em{font-style:italic;color:var(--gold2);display:block}
-.hero-sub{font-size:1.05rem;font-weight:300;color:rgba(248,244,255,0.75);max-width:520px;margin:0 auto 2.5rem;letter-spacing:0.02em}
+.hero-h .gradient-text{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-sub{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,0.6);max-width:520px;margin:0 auto 2.5rem;letter-spacing:0.02em}
 .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-g{padding:0.95rem 2.6rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border-radius:30px;font-weight:600;transition:all var(--ease)}
-.btn-g:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,151,58,0.45)}
-.btn-o{padding:0.95rem 2.6rem;border:1px solid rgba(248,244,255,0.4);color:var(--white);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border-radius:30px;transition:all var(--ease)}
+.btn-g{padding:0.95rem 2.6rem;background:var(--accent);color:var(--white);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border-radius:30px;font-weight:600;transition:all var(--ease)}
+.btn-g:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(124,58,237,0.4)}
+.btn-o{padding:0.95rem 2.6rem;border:1px solid rgba(255,255,255,0.25);color:var(--white);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border-radius:30px;transition:all var(--ease)}
 .btn-o:hover{border-color:var(--white);background:rgba(255,255,255,0.07);transform:translateY(-3px)}
-.scroll-cue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;color:rgba(248,244,255,0.4);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;animation:scueBounce 2.5s ease infinite}
-.scroll-cue-line{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(200,151,58,0.5))}
+.scroll-cue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:5;color:rgba(255,255,255,0.3);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;animation:scueBounce 2.5s ease infinite}
+.scroll-cue-line{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.3))}
 @keyframes scueBounce{0%,100%{transform:translateX(-50%) translateY(0)}55%{transform:translateX(-50%) translateY(8px)}}
-/* hero stats bar */
-.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:3;display:flex;justify-content:center;gap:0}
-.hero-stat{padding:1.4rem 3rem;border-top:1px solid var(--border);border-right:1px solid var(--border);background:rgba(10,8,16,0.75);backdrop-filter:blur(12px);text-align:center;flex:1;max-width:240px}
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:0}
+.hero-stat{padding:1.4rem 3rem;border-top:1px solid var(--border);border-right:1px solid var(--border);background:rgba(10,10,10,0.8);backdrop-filter:blur(12px);text-align:center;flex:1;max-width:240px}
 .hero-stat:first-child{border-left:1px solid var(--border)}
-.hs-num{font-family:var(--serif);font-size:2rem;color:var(--gold);font-weight:400}
+.hs-num{font-family:var(--serif);font-size:2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400}
 .hs-lbl{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 
-/* ======= ABOUT ======= */
-#about{padding:7rem 2rem;background:var(--ink)}
-.about-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.about-visual{position:relative}
-.about-frame{width:100%;aspect-ratio:4/5;border-radius:var(--r3);overflow:hidden;position:relative}
-.about-frame-img{width:100%;height:100%;object-fit:cover}
-.about-frame-placeholder{width:100%;height:100%;background:linear-gradient(145deg,var(--ink3),var(--surface));display:flex;align-items:center;justify-content:center}
-.about-accent-box{position:absolute;bottom:-2rem;right:-2rem;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:var(--r2);padding:1.8rem;color:var(--ink);text-align:center;box-shadow:0 20px 60px rgba(200,151,58,0.3)}
-.aab-num{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1}
-.aab-lbl{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;margin-top:4px;opacity:0.75}
-.about-text p{color:var(--text);line-height:1.9;font-size:0.95rem;margin-bottom:1.2rem;font-weight:300}
-.about-vals{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
-.val-card{padding:1.2rem;border:1px solid var(--border);border-radius:var(--r2);background:rgba(255,255,255,0.025)}
-.val-icon{width:36px;height:36px;border-radius:var(--r);background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:0.7rem}
-.val-title{font-size:0.85rem;font-weight:500;color:var(--white);margin-bottom:0.2rem}
-.val-text{font-size:0.78rem;color:var(--muted);line-height:1.6}
-
-/* ======= PACKAGES ======= */
-#packages{padding:7rem 2rem;background:var(--ink2)}
-.pkg-in{max-width:1300px;margin:0 auto}
-.pkg-tabs{display:flex;justify-content:center;gap:0;margin:3rem 0 3.5rem;border:1px solid var(--border);border-radius:40px;overflow:hidden;width:fit-content;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.03)}
-.pkg-tab{padding:0.75rem 2.5rem;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:all var(--ease);border:none;background:none}
-.pkg-tab.on{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-weight:600;border-radius:40px}
-.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.pkg-panel{display:none}
-.pkg-panel.on{display:block}
-
-/* CARD */
-.pk{border-radius:var(--r3);overflow:hidden;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1),box-shadow 0.45s;position:relative;background:linear-gradient(160deg,var(--ink3) 0%,var(--surface) 100%);border:1px solid var(--border)}
-.pk::after{content:'';position:absolute;inset:0;border-radius:var(--r3);background:linear-gradient(135deg,rgba(61,26,110,0.08) 0%,transparent 60%);pointer-events:none}
-.pk:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(7,5,13,0.7),0 0 0 1px rgba(200,151,58,0.25)}
-.pk.star{border-color:var(--border2);background:linear-gradient(160deg,#1c1235 0%,#221845 100%)}
-.pk.star::after{background:linear-gradient(135deg,rgba(200,151,58,0.07) 0%,rgba(92,47,160,0.05) 100%)}
-.pk-badge{position:absolute;top:1.4rem;right:1.4rem;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--ink);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:20px;font-weight:700}
-.pk-img{height:190px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.pk-img-bg{position:absolute;inset:0}
-.pk-img-icon{position:relative;z-index:1;opacity:0.4}
-.pk-body{padding:2rem}
-.pk-cat{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
-.pk-name{font-family:var(--serif);font-size:1.55rem;color:var(--white);margin-bottom:0.3rem;font-weight:400}
-.pk-tagline{font-size:0.8rem;color:var(--muted);margin-bottom:1.2rem;font-style:italic}
-.pk-price{margin-bottom:1.4rem}
-.pk-amt{font-family:var(--serif);font-size:2rem;color:var(--gold);font-weight:400;line-height:1}
-.pk-per{font-size:0.78rem;color:var(--muted)}
-.pk-feats{margin-bottom:1.6rem;border-top:1px solid rgba(200,151,58,0.08);padding-top:1.2rem}
-.pk-feat{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.8rem;color:var(--text);padding:0.4rem 0}
-.ck{width:17px;height:17px;border-radius:50%;background:rgba(200,151,58,0.1);border:1px solid rgba(200,151,58,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.ck svg{width:8px;height:8px}
-.pk-btn{width:100%;padding:0.95rem;background:transparent;border:1px solid var(--border2);color:var(--gold);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);transition:all var(--ease)}
-.pk-btn:hover,.pk.star .pk-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));border-color:transparent;color:var(--ink);font-weight:600;box-shadow:0 8px 28px rgba(200,151,58,0.35)}
-
-/* ======= GALLERY ======= */
 #gallery{padding:7rem 2rem;background:var(--ink)}
 .gal-in{max-width:1300px;margin:0 auto}
-.gal-grid{columns:3 280px;gap:1rem;margin-top:3rem}
+.gal-filters{display:flex;justify-content:center;gap:0.5rem;margin:2.5rem 0 3rem}
+.gal-filter{padding:0.55rem 1.6rem;border:1px solid var(--border);border-radius:30px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:all var(--ease);background:transparent}
+.gal-filter:hover{border-color:var(--border2);color:var(--text)}
+.gal-filter.active{background:var(--accent);border-color:transparent;color:var(--white);font-weight:500}
+.gal-grid{columns:3 280px;gap:1rem;margin-top:0}
 .gal-item{break-inside:avoid;margin-bottom:1rem;border-radius:var(--r2);overflow:hidden;position:relative;cursor:pointer;transition:transform var(--ease)}
 .gal-item:hover{transform:scale(1.02)}
 .gal-ph{width:100%;background:linear-gradient(145deg,var(--surface),var(--ink3));display:flex;align-items:center;justify-content:center}
 .gal-item img{width:100%;display:block;object-fit:cover}
 .gal-item img[style*="display:none"] + .gal-ph{display:flex!important}
-.gal-ov{position:absolute;inset:0;background:rgba(10,8,16,0.7);display:flex;align-items:flex-end;padding:1.2rem;opacity:0;transition:opacity var(--ease)}
+.gal-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.85) 0%,transparent 60%);display:flex;align-items:flex-end;padding:1.2rem;opacity:0;transition:opacity var(--ease)}
 .gal-item:hover .gal-ov{opacity:1}
 .gal-ov-title{font-family:var(--serif);font-size:1rem;color:var(--white)}
-.gal-ov-cat{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)}
+.gal-ov-cat{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple2)}
 
-/* ======= TESTIMONIALS ======= */
+#about{padding:7rem 2rem;background:var(--ink2)}
+.about-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-visual{position:relative}
+.about-frame{width:100%;aspect-ratio:4/5;border-radius:var(--r3);overflow:hidden;position:relative}
+.about-frame-img{width:100%;height:100%;object-fit:cover}
+.about-frame-placeholder{width:100%;height:100%;background:linear-gradient(145deg,var(--ink3),var(--surface));display:flex;align-items:center;justify-content:center}
+.about-accent-box{position:absolute;bottom:-2rem;right:-2rem;background:var(--accent);border-radius:var(--r2);padding:1.8rem;color:var(--white);text-align:center;box-shadow:0 20px 60px rgba(124,58,237,0.25)}
+.aab-num{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1}
+.aab-lbl{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;margin-top:4px;opacity:0.75}
+.about-text p{color:var(--text);line-height:1.9;font-size:0.95rem;margin-bottom:1.2rem;font-weight:300}
+.about-vals{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.val-card{padding:1.2rem;border:1px solid var(--border);border-radius:var(--r2);background:rgba(255,255,255,0.025)}
+.val-icon{width:36px;height:36px;border-radius:var(--r);background:var(--glow);border:1px solid rgba(124,58,237,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:0.7rem}
+.val-icon svg{width:18px;height:18px;color:var(--purple2)}
+.val-title{font-size:0.85rem;font-weight:500;color:var(--white);margin-bottom:0.2rem}
+.val-text{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+#packages{padding:7rem 2rem;background:var(--ink)}
+.pkg-in{max-width:1300px;margin:0 auto}
+.pkg-tabs{display:flex;justify-content:center;gap:0;margin:3rem 0 3.5rem;border:1px solid var(--border);border-radius:40px;overflow:hidden;width:fit-content;margin-left:auto;margin-right:auto;background:rgba(255,255,255,0.03)}
+.pkg-tab{padding:0.75rem 2.5rem;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:all var(--ease);border:none;background:none}
+.pkg-tab.on{background:var(--accent);color:var(--white);font-weight:600;border-radius:40px}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pkg-panel{display:none}.pkg-panel.on{display:block}
+.pk{border-radius:var(--r3);overflow:hidden;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1),box-shadow 0.45s;position:relative;background:linear-gradient(160deg,var(--ink3) 0%,var(--surface) 100%);border:1px solid var(--border)}
+.pk::after{content:'';position:absolute;inset:0;border-radius:var(--r3);background:linear-gradient(135deg,rgba(124,58,237,0.05) 0%,transparent 60%);pointer-events:none}
+.pk:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.08)}
+.pk.star{border-color:var(--border2);background:linear-gradient(160deg,#151515 0%,#1e1e1e 100%)}
+.pk.star::after{background:linear-gradient(135deg,rgba(124,58,237,0.06) 0%,rgba(236,72,153,0.04) 100%)}
+.pk-badge{position:absolute;top:1.4rem;right:1.4rem;background:var(--accent);color:var(--white);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:20px;font-weight:700}
+.pk-img{height:190px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.pk-img-bg{position:absolute;inset:0}
+.pk-img-icon{position:relative;z-index:1;opacity:0.4}
+.pk-body{padding:2rem}
+.pk-cat{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--purple2);margin-bottom:0.5rem}
+.pk-name{font-family:var(--serif);font-size:1.55rem;color:var(--white);margin-bottom:0.3rem;font-weight:400}
+.pk-tagline{font-size:0.8rem;color:var(--muted);margin-bottom:1.2rem;font-style:italic}
+.pk-price{margin-bottom:1.4rem}
+.pk-amt{font-family:var(--serif);font-size:2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;line-height:1}
+.pk-per{font-size:0.78rem;color:var(--muted)}
+.pk-feats{margin-bottom:1.6rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1.2rem}
+.pk-feat{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.8rem;color:var(--text);padding:0.4rem 0}
+.ck{width:17px;height:17px;border-radius:50%;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ck svg{width:8px;height:8px;color:var(--purple2)}
+.pk-btn{width:100%;padding:0.95rem;background:transparent;border:1px solid var(--border2);color:var(--white);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);transition:all var(--ease)}
+.pk-btn:hover,.pk.star .pk-btn{background:var(--accent);border-color:transparent;color:var(--white);font-weight:600;box-shadow:0 8px 28px rgba(124,58,237,0.3)}
+
 #testimonials{padding:7rem 2rem;background:var(--ink2)}
 .testi-in{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3.5rem}
-.tcard{background:linear-gradient(145deg,var(--ink3),var(--surface));border:1px solid var(--border);border-radius:var(--r3);padding:2rem;position:relative;transition:transform var(--ease),box-shadow var(--ease)}
-.tcard:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(7,5,13,0.5)}
-.tcard-q{font-family:var(--serif);font-size:3.5rem;color:var(--gold);opacity:0.25;line-height:0.7;margin-bottom:0.8rem}
+.testimonials-swiper{overflow:visible;padding-bottom:3rem}
+.testimonials-swiper .swiper-slide{height:auto}
+.swiper-pagination{position:relative;margin-top:2rem}
+.swiper-pagination-bullet{background:rgba(255,255,255,0.15);opacity:1}
+.swiper-pagination-bullet-active{background:var(--accent);width:24px;border-radius:4px}
+.tcard{background:linear-gradient(145deg,var(--ink3),var(--surface));border:1px solid var(--border);border-radius:var(--r3);padding:2rem;position:relative;transition:transform var(--ease),box-shadow var(--ease);height:100%}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.tcard-q{font-family:var(--serif);font-size:3.5rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0.4;line-height:0.7;margin-bottom:0.8rem}
 .tcard-body{font-family:var(--serif);font-size:1.05rem;color:var(--text);font-style:italic;line-height:1.75;margin-bottom:1.5rem}
 .tcard-stars{display:flex;gap:3px;margin-bottom:1rem}
-.tcard-stars span{color:var(--gold);font-size:0.9rem}
+.tcard-stars span{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:0.9rem}
 .tcard-author{display:flex;align-items:center;gap:0.9rem}
-.tcard-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--violet2));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;color:var(--gold2);border:1px solid var(--border)}
+.tcard-av{width:42px;height:42px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;color:var(--white);border:1px solid rgba(255,255,255,0.1)}
 .tcard-name{font-size:0.875rem;font-weight:500;color:var(--white)}
 .tcard-evt{font-size:0.72rem;color:var(--muted)}
 
-/* ======= BOOKING ======= */
 #booking{padding:7rem 2rem;background:var(--ink)}
 .bk-in{max-width:900px;margin:0 auto}
 .bk-wrap{background:linear-gradient(145deg,var(--ink3),var(--surface));border:1px solid var(--border);border-radius:var(--r3);padding:3rem;margin-top:3.5rem;position:relative;overflow:hidden}
-.bk-wrap::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(61,26,110,0.3),transparent 70%);pointer-events:none}
+.bk-wrap::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.2),transparent 70%);pointer-events:none}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
-.fg{margin-bottom:1.5rem}
-.fg.wide{grid-column:1/-1}
+.fg{margin-bottom:1.5rem}.fg.wide{grid-column:1/-1}
 .fl{display:block;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem}
-.fi,.fs,.ft{width:100%;padding:0.9rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(200,151,58,0.15);border-radius:var(--r);color:var(--white);font-family:var(--sans);font-size:0.9rem;transition:all var(--ease);outline:none}
+.fi,.fs,.ft{width:100%;padding:0.9rem 1.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);color:var(--white);font-family:var(--sans);font-size:0.9rem;transition:all var(--ease);outline:none}
 .fi::placeholder,.ft::placeholder{color:var(--muted)}
-.fi:focus,.fs:focus,.ft:focus{border-color:var(--gold);background:rgba(200,151,58,0.06)}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--purple);background:rgba(124,58,237,0.06)}
 .fs option{background:var(--ink2);color:var(--white)}
 .ft{resize:vertical;min-height:110px}
 .fg.err .fi,.fg.err .fs,.fg.err .ft{border-color:#E05555}
 .fg.err .fe{display:block}
 .fe{font-size:0.72rem;color:#E05555;margin-top:0.4rem;display:none}
-.bk-btn{width:100%;padding:1.1rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);font-weight:600;transition:all var(--ease);margin-top:0.5rem}
-.bk-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,151,58,0.4)}
+.bk-btn{width:100%;padding:1.1rem;background:var(--accent);color:var(--white);font-size:0.82rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);font-weight:600;transition:all var(--ease);margin-top:0.5rem}
+.bk-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,0.35)}
 .bk-success{display:none;text-align:center;padding:3rem 1rem}
 .bk-success.show{display:block}
-.bk-tick{width:72px;height:72px;border-radius:50%;background:rgba(200,151,58,0.1);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2rem}
-.bk-ok-title{font-family:var(--serif);font-size:2rem;color:var(--gold);margin-bottom:0.7rem}
+.bk-tick{width:72px;height:72px;border-radius:50%;background:var(--glow);border:1px solid rgba(124,58,237,0.25);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2rem;color:var(--purple2)}
+.bk-ok-title{font-family:var(--serif);font-size:2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.7rem}
 .bk-ok-msg{color:var(--muted);line-height:1.8;font-size:0.9rem}
 
-/* ======= CONTACT ======= */
 #contact{padding:7rem 2rem;background:var(--ink2)}
 .ct-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;margin-top:3.5rem}
 .ct-info h3{font-family:var(--serif);font-size:1.5rem;color:var(--white);margin-bottom:0.8rem}
 .ct-info p{color:var(--muted);font-size:0.9rem;line-height:1.85;margin-bottom:2rem}
 .ct-detail{display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:1rem;transition:border-color var(--ease)}
 .ct-detail:hover{border-color:var(--border2)}
-.ct-icon{width:40px;height:40px;border-radius:var(--r);background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ct-icon svg{width:17px;height:17px;color:var(--gold)}
+.ct-icon{width:40px;height:40px;border-radius:var(--r);background:var(--glow);border:1px solid rgba(124,58,237,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ct-icon svg{width:17px;height:17px;color:var(--purple2)}
 .ct-detail-lbl{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
 .ct-detail-val{font-size:0.88rem;color:var(--text)}
 .socials{display:flex;gap:0.7rem;margin-top:2rem}
 .soc-btn{width:42px;height:42px;border-radius:var(--r);background:rgba(255,255,255,0.03);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
-.soc-btn:hover{background:var(--gold);border-color:var(--gold)}
+.soc-btn:hover{background:var(--accent);border-color:transparent}
 .soc-btn svg{width:16px;height:16px}
+.ct-map{margin-bottom:1.5rem;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border)}
+.ct-map iframe{display:block}
 .ct-form{background:linear-gradient(145deg,var(--ink3),var(--surface));border:1px solid var(--border);border-radius:var(--r3);padding:2.5rem}
 .ct-form-h{font-family:var(--serif);font-size:1.3rem;color:var(--white);margin-bottom:1.5rem}
 .ct-form .fi,.ct-form .ft{background:rgba(255,255,255,0.03)}
-.ct-sub-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--ink3),var(--surface2));border:1px solid var(--border2);color:var(--gold);font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);transition:all var(--ease)}
-.ct-sub-btn:hover{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);border-color:transparent;font-weight:600}
+.ct-sub-btn{width:100%;padding:1rem;background:rgba(255,255,255,0.04);border:1px solid var(--border2);color:var(--white);font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;border-radius:var(--r2);transition:all var(--ease)}
+.ct-sub-btn:hover{background:var(--accent);color:var(--white);border-color:transparent;font-weight:600}
 
-/* ======= ADMIN LOGIN ======= */
-#admin-login{display:none;position:fixed;inset:0;background:rgba(10,8,16,0.97);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+#admin-login{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.97);z-index:9000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
 #admin-login.show{display:flex}
 .login-box{background:linear-gradient(145deg,var(--ink3),var(--surface));border:1px solid var(--border2);border-radius:var(--r3);padding:3rem;width:100%;max-width:420px;position:relative}
 .login-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1.1rem;transition:all var(--ease)}
 .login-close:hover{background:rgba(255,255,255,0.1);color:var(--white)}
 .login-logo{font-family:var(--serif);font-size:1.9rem;color:var(--white);text-align:center;margin-bottom:0.3rem}
-.login-logo em{color:var(--gold);font-style:normal}
+.login-logo em{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
 .login-sub{font-size:0.72rem;text-align:center;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:2rem}
-.login-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:0.8rem;letter-spacing:0.18em;text-transform:uppercase;border-radius:var(--r2);font-weight:600;transition:all var(--ease)}
-.login-btn:hover{box-shadow:0 8px 30px rgba(200,151,58,0.4);transform:translateY(-1px)}
+.login-btn{width:100%;padding:1rem;background:var(--accent);color:var(--white);font-size:0.8rem;letter-spacing:0.18em;text-transform:uppercase;border-radius:var(--r2);font-weight:600;transition:all var(--ease)}
+.login-btn:hover{box-shadow:0 8px 30px rgba(124,58,237,0.35);transform:translateY(-1px)}
 .login-err{font-size:0.78rem;color:#E05555;text-align:center;margin-top:0.8rem;display:none}
-.login-hint{font-size:0.7rem;color:rgba(255,255,255,0.25);text-align:center;margin-top:1rem}
+.login-hint{font-size:0.7rem;color:rgba(255,255,255,0.2);text-align:center;margin-top:1rem}
 
-/* ======= ADMIN DASHBOARD ======= */
-#admin{display:none;min-height:100vh;background:#0F0D1A;flex-direction:row}
+#admin{display:none;min-height:100vh;background:var(--ink);flex-direction:row}
 #admin.on{display:flex!important}
 .sb{width:260px;background:var(--ink2);min-height:100vh;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
 .sb-brand{padding:2rem 1.5rem;border-bottom:1px solid var(--border)}
 .sb-logo{font-family:var(--serif);font-size:1.3rem;color:var(--white)}
-.sb-logo em{color:var(--gold);font-style:normal}
+.sb-logo em{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
 .sb-sub{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:3px}
 .sb-nav{padding:1.5rem 0;flex:1}
 .sb-sect{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:0 1.5rem;margin-bottom:0.4rem;margin-top:1rem}
 .sb-lnk{display:flex;align-items:center;gap:0.85rem;padding:0.75rem 1.5rem;font-size:0.82rem;color:rgba(255,255,255,0.5);transition:all var(--ease);cursor:pointer;border-left:2px solid transparent}
 .sb-lnk svg{width:17px;height:17px;flex-shrink:0}
 .sb-lnk:hover{color:var(--white);background:rgba(255,255,255,0.04)}
-.sb-lnk.on{color:var(--gold);border-left-color:var(--gold);background:rgba(200,151,58,0.06)}
+.sb-lnk.on{color:var(--purple2);border-left-color:var(--purple);background:rgba(124,58,237,0.06)}
 .adm-main{flex:1;display:flex;flex-direction:column;min-height:100vh}
 .adm-top{background:rgba(255,255,255,0.02);padding:1.1rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .adm-top h1{font-family:var(--serif);font-size:1.35rem;color:var(--white);font-weight:400}
 .adm-user{display:flex;align-items:center;gap:0.8rem;font-size:0.83rem;color:var(--text)}
-.adm-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--ink);font-weight:700}
+.adm-av{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--white);font-weight:700}
 .adm-content{padding:2rem;flex:1}
-.dp{display:none}
-.dp.on{display:block}
+.dp{display:none}.dp.on{display:block}
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1.2rem;margin-bottom:2.5rem}
 .mc{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;transition:border-color var(--ease)}
 .mc:hover{border-color:var(--border2)}
-.mc.gold{border-top:2px solid var(--gold)}
-.mc-v{font-family:var(--serif);font-size:2.2rem;color:var(--white);font-weight:400;line-height:1}
+.mc.gold{border-top:2px solid var(--purple)}
+.mc-v{font-family:var(--serif);font-size:2.2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:400;line-height:1}
 .mc-l{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:5px}
 .mc-ch{font-size:0.72rem;margin-top:7px;color:#6BBF6B}
 .adm-g2{display:grid;grid-template-columns:1.6fr 1fr;gap:1.4rem;margin-bottom:1.5rem}
 .adm-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
 .adm-card-h{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .adm-card-h h3{font-family:var(--serif);font-size:1.05rem;color:var(--white);font-weight:400}
-.view-all{font-size:0.72rem;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;cursor:pointer}
+.view-all{font-size:0.72rem;color:var(--purple2);letter-spacing:0.08em;text-transform:uppercase;cursor:pointer}
 .view-all:hover{text-decoration:underline}
 .dt{width:100%;border-collapse:collapse;font-size:0.82rem}
 .dt th{padding:0.7rem 1.2rem;text-align:left;font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500;background:rgba(255,255,255,0.02)}
-.dt td{padding:0.85rem 1.2rem;border-bottom:1px solid rgba(200,151,58,0.06);color:var(--text)}
+.dt td{padding:0.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text)}
 .dt tr:last-child td{border-bottom:none}
 .dt tr:hover td{background:rgba(255,255,255,0.02)}
 .sb-wrap{display:inline-flex;align-items:center;padding:0.25rem 0.7rem;border-radius:20px;font-size:0.67rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500}
@@ -356,41 +282,38 @@ nav.stuck{background:rgba(10,8,16,0.92);backdrop-filter:blur(18px);border-bottom
 .complete-b:hover{background:#185FA5;color:var(--white)}
 .tw-wrap{overflow-x:auto}
 .up-list{padding:1rem 1.4rem}
-.up-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid rgba(200,151,58,0.07)}
+.up-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid rgba(255,255,255,0.06)}
 .up-item:last-child{border:none}
-.up-date{width:44px;height:44px;border-radius:var(--r);background:var(--glow);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
-.up-day{font-family:var(--serif);font-size:1.2rem;color:var(--gold);line-height:1}
+.up-date{width:44px;height:44px;border-radius:var(--r);background:var(--glow);border:1px solid rgba(124,58,237,0.15);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.up-day{font-family:var(--serif);font-size:1.2rem;background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
 .up-mon{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
 .up-name{font-size:0.85rem;color:var(--white);font-weight:500}
 .up-pkg{font-size:0.72rem;color:var(--muted)}
 
-/* TOAST */
 .toast-wrap{position:fixed;bottom:2rem;right:2rem;z-index:9999;display:flex;flex-direction:column;gap:0.6rem;pointer-events:none}
-.toast{background:var(--ink2);color:var(--white);padding:0.9rem 1.4rem;border-radius:var(--r2);border-left:3px solid var(--gold);font-size:0.84rem;animation:tsIn 0.3s ease,tsOut 0.3s ease 2.8s forwards;pointer-events:auto;box-shadow:0 12px 40px rgba(7,5,13,0.6)}
+.toast{background:var(--ink2);color:var(--white);padding:0.9rem 1.4rem;border-radius:var(--r2);border-left:3px solid var(--purple);font-size:0.84rem;animation:tsIn 0.3s ease,tsOut 0.3s ease 2.8s forwards;pointer-events:auto;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
 @keyframes tsIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes tsOut{from{opacity:1}to{opacity:0;transform:translateX(120%)}}
 
-/* FOOTER */
-footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2rem;border-top:1px solid var(--border)}
+footer{background:var(--ink2);color:rgba(255,255,255,0.45);padding:5rem 2rem 2rem;border-top:1px solid var(--border)}
 .ft-in{max-width:1280px;margin:0 auto}
 .ft-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
 .ft-logo{font-family:var(--serif);font-size:1.5rem;color:var(--white);margin-bottom:0.8rem}
-.ft-logo em{color:var(--gold);font-style:normal}
+.ft-logo em{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal}
 .ft-desc{font-size:0.84rem;line-height:1.85;margin-bottom:1.4rem;font-weight:300}
 .ft-soc{display:flex;gap:0.6rem}
 .ft-soc-btn{width:36px;height:36px;border-radius:var(--r);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all var(--ease)}
-.ft-soc-btn:hover{background:var(--gold);border-color:var(--gold)}
+.ft-soc-btn:hover{background:var(--accent);border-color:transparent}
 .ft-soc-btn svg{width:14px;height:14px}
 .ft-col h4{font-size:0.66rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem}
-.ft-lnk{display:block;font-size:0.83rem;color:rgba(248,244,255,0.45);padding:0.3rem 0;transition:color var(--ease);cursor:pointer}
-.ft-lnk:hover{color:var(--gold)}
+.ft-lnk{display:block;font-size:0.83rem;color:rgba(255,255,255,0.4);padding:0.3rem 0;transition:color var(--ease);cursor:pointer}
+.ft-lnk:hover{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .ft-bot{border-top:1px solid rgba(255,255,255,0.06);padding-top:1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .ft-copy{font-size:0.75rem}
 .ft-legal{display:flex;gap:1.5rem}
-.ft-legal a{font-size:0.75rem;color:rgba(248,244,255,0.35);transition:color var(--ease)}
-.ft-legal a:hover{color:var(--gold)}
+.ft-legal a{font-size:0.75rem;color:rgba(255,255,255,0.3);transition:color var(--ease)}
+.ft-legal a:hover{background:var(--accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* RESPONSIVE */
 @media(max-width:1024px){
   .about-in{grid-template-columns:1fr;gap:3rem}
   .about-frame{max-width:440px}
@@ -413,20 +336,18 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   .sb-brand,.sb-sect{display:none}
   .sb-nav{padding:0;display:flex;overflow-x:auto}
   .sb-lnk{padding:0.7rem 0.9rem;flex-direction:column;gap:2px;font-size:0.62rem;min-width:56px;text-align:center;border-left:none;border-top:2px solid transparent}
-  .sb-lnk.on{border-top-color:var(--gold);border-left:none}
+  .sb-lnk.on{border-top-color:var(--purple);border-left:none}
   .adm-main{margin-bottom:66px}
   .adm-content{padding:1rem}
   .metrics{grid-template-columns:1fr 1fr}
   .pkg-grid{grid-template-columns:1fr}
 }
 @media(max-width:480px){
-  .testi-grid{grid-template-columns:1fr}
   .metrics{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-
 <!-- LOADER -->
 <div id="loader">
   <div class="ld-inner">
@@ -437,6 +358,12 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
 
 <!-- TOAST -->
 <div class="toast-wrap" id="toastWrap"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
 
 <!-- ADMIN LOGIN OVERLAY -->
 <div id="admin-login">
@@ -460,10 +387,10 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
     <div class="nav-logo">Ngonachi <em>Pix</em></div>
     <div class="nav-links">
       <a class="nav-a" href="#hero">Home</a>
-      <a class="nav-a" href="#packages">Packages</a>
       <a class="nav-a" href="#gallery">Gallery</a>
-      <a class="nav-a" href="#booking">Book Now</a>
       <a class="nav-a" href="#about">About</a>
+      <a class="nav-a" href="#packages">Packages</a>
+      <a class="nav-a" href="#booking">Book Now</a>
       <a class="nav-a" href="#contact">Contact</a>
       <button class="nav-cta" onclick="showAdminLogin()">Admin</button>
     </div>
@@ -476,157 +403,23 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
 <!-- MOBILE MENU -->
 <div class="mob-menu" id="mobMenu">
   <a class="nav-a" href="#hero" onclick="closeMenu()">Home</a>
-  <a class="nav-a" href="#packages" onclick="closeMenu()">Packages</a>
   <a class="nav-a" href="#gallery" onclick="closeMenu()">Gallery</a>
-  <a class="nav-a" href="#booking" onclick="closeMenu()">Book Now</a>
   <a class="nav-a" href="#about" onclick="closeMenu()">About</a>
+  <a class="nav-a" href="#packages" onclick="closeMenu()">Packages</a>
+  <a class="nav-a" href="#booking" onclick="closeMenu()">Book Now</a>
   <a class="nav-a" href="#contact" onclick="closeMenu()">Contact</a>
   <button class="nav-cta" onclick="showAdminLogin();closeMenu()">Admin Login</button>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-canvas">
-    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="g1" cx="20%" cy="25%"><stop offset="0%" stop-color="#3B1A70" stop-opacity="1"/><stop offset="100%" stop-color="#0A0810" stop-opacity="1"/></radialGradient>
-        <radialGradient id="g2" cx="82%" cy="75%"><stop offset="0%" stop-color="#1C0A38" stop-opacity="1"/><stop offset="100%" stop-color="#0A0810" stop-opacity="1"/></radialGradient>
-        <radialGradient id="g3" cx="50%" cy="72%"><stop offset="0%" stop-color="#C8973A" stop-opacity="0.14"/><stop offset="100%" stop-color="#C8973A" stop-opacity="0"/></radialGradient>
-        <radialGradient id="g4" cx="50%" cy="50%"><stop offset="0%" stop-color="#5C2FA0" stop-opacity="0.12"/><stop offset="100%" stop-color="#5C2FA0" stop-opacity="0"/></radialGradient>
-      </defs>
-      <rect width="1440" height="900" fill="#0A0810"/>
-      <ellipse cx="290" cy="210" rx="560" ry="430" fill="url(#g1)"/>
-      <ellipse cx="1180" cy="680" rx="480" ry="400" fill="url(#g2)"/>
-      <ellipse cx="720" cy="720" rx="700" ry="220" fill="url(#g3)"/>
-      <ellipse cx="720" cy="420" rx="400" ry="300" fill="url(#g4)"/>
-      <!-- stars -->
-      <circle cx="140" cy="70" r="1.5" fill="#C8973A" opacity="0.7"/>
-      <circle cx="420" cy="42" r="1" fill="white" opacity="0.5"/>
-      <circle cx="880" cy="28" r="1.8" fill="white" opacity="0.4"/>
-      <circle cx="1220" cy="90" r="1.2" fill="#C8973A" opacity="0.6"/>
-      <circle cx="1360" cy="55" r="2" fill="#C8973A" opacity="0.5"/>
-      <circle cx="60" cy="290" r="1.2" fill="white" opacity="0.35"/>
-      <circle cx="1390" cy="340" r="1.5" fill="white" opacity="0.4"/>
-      <circle cx="40" cy="620" r="1" fill="#C8973A" opacity="0.45"/>
-      <circle cx="1410" cy="580" r="1.2" fill="#C8973A" opacity="0.55"/>
-      <circle cx="580" cy="18" r="1.2" fill="white" opacity="0.5"/>
-      <circle cx="740" cy="55" r="0.8" fill="#E8B96A" opacity="0.6"/>
-      <circle cx="980" cy="120" r="1" fill="white" opacity="0.3"/>
-      <circle cx="200" cy="480" r="0.8" fill="#E8B96A" opacity="0.4"/>
-      <circle cx="1300" cy="200" r="0.8" fill="white" opacity="0.35"/>
-      <!-- bokeh -->
-      <circle cx="300" cy="450" r="90" fill="#5C2FA0" opacity="0.07"/>
-      <circle cx="1150" cy="180" r="130" fill="#C8973A" opacity="0.05"/>
-      <circle cx="870" cy="760" r="100" fill="#7C4DFF" opacity="0.05"/>
-      <!-- decorative line accents -->
-      <line x1="480" y1="385" x2="610" y2="385" stroke="#C8973A" stroke-width="0.6" opacity="0.45"/>
-      <line x1="830" y1="385" x2="960" y2="385" stroke="#C8973A" stroke-width="0.6" opacity="0.45"/>
-      <circle cx="720" cy="385" r="3.5" fill="none" stroke="#C8973A" stroke-width="0.6" opacity="0.35"/>
-      <!-- abstract couple silhouette -->
-      <g opacity="0.08">
-        <rect x="685" y="530" width="22" height="160" rx="11" fill="#C8973A"/>
-        <rect x="718" y="540" width="20" height="152" rx="10" fill="#C8973A"/>
-        <circle cx="696" cy="520" r="20" fill="#C8973A"/>
-        <circle cx="728" cy="528" r="18" fill="#C8973A"/>
-        <path d="M718 640 Q666 720 628 775 Q690 762 728 740 Q766 762 812 775 Q774 720 750 640 Z" fill="#C8973A"/>
-      </g>
-    </svg>
-
-    <!-- LENS FLARES -->
-  <div class="lens-flare lf-1"></div>
-  <div class="lens-flare lf-2"></div>
-  <div class="lens-flare lf-3"></div>
-
-  <!-- FILM STRIPS (left & right edges) -->
-  <svg class="filmstrip filmstrip-left" viewBox="0 0 46 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="46" height="900" fill="#000"/>
-    <g fill="#0A0810">
-      <rect x="8" y="20" width="30" height="20" rx="3"/>
-      <rect x="8" y="60" width="30" height="20" rx="3"/>
-      <rect x="8" y="100" width="30" height="20" rx="3"/>
-      <rect x="8" y="140" width="30" height="20" rx="3"/>
-      <rect x="8" y="180" width="30" height="20" rx="3"/>
-      <rect x="8" y="220" width="30" height="20" rx="3"/>
-      <rect x="8" y="260" width="30" height="20" rx="3"/>
-      <rect x="8" y="300" width="30" height="20" rx="3"/>
-      <rect x="8" y="340" width="30" height="20" rx="3"/>
-      <rect x="8" y="380" width="30" height="20" rx="3"/>
-      <rect x="8" y="420" width="30" height="20" rx="3"/>
-      <rect x="8" y="460" width="30" height="20" rx="3"/>
-      <rect x="8" y="500" width="30" height="20" rx="3"/>
-      <rect x="8" y="540" width="30" height="20" rx="3"/>
-      <rect x="8" y="580" width="30" height="20" rx="3"/>
-      <rect x="8" y="620" width="30" height="20" rx="3"/>
-      <rect x="8" y="660" width="30" height="20" rx="3"/>
-      <rect x="8" y="700" width="30" height="20" rx="3"/>
-      <rect x="8" y="740" width="30" height="20" rx="3"/>
-      <rect x="8" y="780" width="30" height="20" rx="3"/>
-      <rect x="8" y="820" width="30" height="20" rx="3"/>
-      <rect x="8" y="860" width="30" height="20" rx="3"/>
-    </g>
-  </svg>
-  <svg class="filmstrip filmstrip-right" viewBox="0 0 46 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="46" height="900" fill="#000"/>
-    <g fill="#0A0810">
-      <rect x="8" y="20" width="30" height="20" rx="3"/>
-      <rect x="8" y="60" width="30" height="20" rx="3"/>
-      <rect x="8" y="100" width="30" height="20" rx="3"/>
-      <rect x="8" y="140" width="30" height="20" rx="3"/>
-      <rect x="8" y="180" width="30" height="20" rx="3"/>
-      <rect x="8" y="220" width="30" height="20" rx="3"/>
-      <rect x="8" y="260" width="30" height="20" rx="3"/>
-      <rect x="8" y="300" width="30" height="20" rx="3"/>
-      <rect x="8" y="340" width="30" height="20" rx="3"/>
-      <rect x="8" y="380" width="30" height="20" rx="3"/>
-      <rect x="8" y="420" width="30" height="20" rx="3"/>
-      <rect x="8" y="460" width="30" height="20" rx="3"/>
-      <rect x="8" y="500" width="30" height="20" rx="3"/>
-      <rect x="8" y="540" width="30" height="20" rx="3"/>
-      <rect x="8" y="580" width="30" height="20" rx="3"/>
-      <rect x="8" y="620" width="30" height="20" rx="3"/>
-      <rect x="8" y="660" width="30" height="20" rx="3"/>
-      <rect x="8" y="700" width="30" height="20" rx="3"/>
-      <rect x="8" y="740" width="30" height="20" rx="3"/>
-      <rect x="8" y="780" width="30" height="20" rx="3"/>
-      <rect x="8" y="820" width="30" height="20" rx="3"/>
-      <rect x="8" y="860" width="30" height="20" rx="3"/>
-    </g>
-  </svg>
-
-  <!-- FLOATING VINTAGE CAMERA SILHOUETTE -->
-  <svg class="hero-camera" width="260" height="200" viewBox="0 0 260 200" style="bottom:8%;left:6%" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="camG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#2A2040"/>
-        <stop offset="100%" stop-color="#0A0810"/>
-      </linearGradient>
-    </defs>
-    <!-- camera body -->
-    <rect x="20" y="60" width="190" height="110" rx="14" fill="url(#camG)" stroke="#C8973A" stroke-width="1" opacity="0.9"/>
-    <!-- top viewfinder hump -->
-    <rect x="80" y="35" width="70" height="30" rx="6" fill="url(#camG)" stroke="#C8973A" stroke-width="1" opacity="0.9"/>
-    <!-- lens barrel outer -->
-    <circle cx="105" cy="118" r="48" fill="#0A0810" stroke="#C8973A" stroke-width="1.2" opacity="0.9"/>
-    <circle cx="105" cy="118" r="36" fill="#130F20" stroke="#E8B96A" stroke-width="1" opacity="0.7"/>
-    <circle cx="105" cy="118" r="24" fill="#1E1830" stroke="#C8973A" stroke-width="0.8" opacity="0.6"/>
-    <!-- lens glass glint -->
-    <circle cx="93" cy="105" r="8" fill="#F5D99A" opacity="0.25"/>
-    <!-- shutter button -->
-    <circle cx="200" cy="48" r="7" fill="#C8973A" opacity="0.5"/>
-    <!-- flash hot shoe -->
-    <rect x="170" y="28" width="24" height="10" rx="2" fill="#1E1830" stroke="#C8973A" stroke-width="0.8" opacity="0.6"/>
-    <!-- strap lugs -->
-    <circle cx="28" cy="72" r="4" fill="#C8973A" opacity="0.4"/>
-    <circle cx="222" cy="72" r="4" fill="#C8973A" opacity="0.4"/>
-    <!-- side dial -->
-    <circle cx="190" cy="85" r="14" fill="#1E1830" stroke="#E8B96A" stroke-width="1" opacity="0.6"/>
-    <line x1="190" y1="85" x2="190" y2="75" stroke="#C8973A" stroke-width="1.5" opacity="0.7"/>
-  </svg>
-  </div>
+  <div class="hero-canvas hero-bg"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-body">
+  <div class="hero-glow hg-1"></div>
+  <div class="hero-glow hg-2"></div>
+  <div class="hero-body" data-aos="fade-up" data-aos-delay="300">
     <div class="hero-tag">Professional Photography · Arusha, Tanzania</div>
-    <h1 class="hero-h">Where Every Frame<em>Tells Your Story</em></h1>
+    <h1 class="hero-h">Capturing <span class="gradient-text">Your Story</span></h1>
     <p class="hero-sub">Luxury wedding & send-off photography that transforms your most cherished moments into timeless art</p>
     <div class="hero-btns">
       <a class="btn-g" href="#booking">Book Your Session</a>
@@ -638,21 +431,38 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
     <span>Scroll</span>
   </div>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="hs-num">850+</div><div class="hs-lbl">Weddings Captured</div></div>
-    <div class="hero-stat"><div class="hs-num">12</div><div class="hs-lbl">Years of Excellence</div></div>
-    <div class="hero-stat"><div class="hs-num">4</div><div class="hs-lbl">Countries Covered</div></div>
-    <div class="hero-stat"><div class="hs-num">100%</div><div class="hs-lbl">Client Satisfaction</div></div>
+    <div class="hero-stat"><div class="hs-num" data-count="850">0</div><div class="hs-lbl">Photos Captured</div></div>
+    <div class="hero-stat"><div class="hs-num" data-count="12">0</div><div class="hs-lbl">Years of Experience</div></div>
+    <div class="hero-stat"><div class="hs-num" data-count="980">0</div><div class="hs-lbl">Happy Clients</div></div>
+    <div class="hero-stat"><div class="hs-num" data-count="4">0</div><div class="hs-lbl">Countries Covered</div></div>
   </div>
 </section>
 
-<!-- ═══ ABOUT ═══ -->
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-in">
+    <div class="center-block" data-aos="fade-up">
+      <div class="section-tag" style="justify-content:center">Our Work</div>
+      <h2 class="section-h">Photography <em>Portfolio</em></h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="gal-filters" data-aos="fade-up" data-aos-delay="100">
+      <button class="gal-filter active" data-filter="all">All</button>
+      <button class="gal-filter" data-filter="wedding">Wedding</button>
+      <button class="gal-filter" data-filter="sendoff">Send-off</button>
+    </div>
+    <div class="gal-grid" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
 <section id="about">
   <div class="about-in">
-    <div class="about-visual">
+    <div class="about-visual" data-aos="fade-right">
       <div class="about-frame">
-        <img src="images/about.jpg" alt="Ngonachi Pix photographer" class="about-frame-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="images/w4.jpg" alt="Ngonachi Pix photographer" class="about-frame-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="about-frame-placeholder" style="display:none">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="16" width="64" height="48" rx="4" stroke="#C8973A" stroke-width="1.2" opacity="0.4"/><circle cx="40" cy="40" r="14" stroke="#C8973A" stroke-width="1.2" opacity="0.4"/><circle cx="62" cy="22" r="4" fill="#C8973A" opacity="0.3"/></svg>
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="16" width="64" height="48" rx="4" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" opacity="0.4"/><circle cx="40" cy="40" r="14" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" opacity="0.4"/><circle cx="62" cy="22" r="4" fill="rgba(255,255,255,0.15)" opacity="0.3"/></svg>
         </div>
       </div>
       <div class="about-accent-box">
@@ -660,7 +470,7 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
         <div class="aab-lbl">Events Captured</div>
       </div>
     </div>
-    <div class="about-text">
+    <div class="about-text" data-aos="fade-left">
       <div class="section-tag">Our Story</div>
       <h2 class="section-h">Every Shot Makes<em> A Big History</em></h2>
       <div class="gold-line"></div>
@@ -669,22 +479,22 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
       <p>We don't just show up with cameras. We immerse ourselves in your day, quietly capturing the laughter, tears, stolen glances, and grand moments that together tell your complete story.</p>
       <div class="about-vals">
         <div class="val-card">
-          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
           <div class="val-title">Genuine Moments</div>
           <div class="val-text">We capture real emotion, not posed perfection</div>
         </div>
         <div class="val-card">
-          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
           <div class="val-title">All-Day Coverage</div>
           <div class="val-text">From preparation to final farewell</div>
         </div>
         <div class="val-card">
-          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="val-title">Premium Quality</div>
           <div class="val-text">Professional gear, expert post-processing</div>
         </div>
         <div class="val-card">
-          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div class="val-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
           <div class="val-title">Dedicated Team</div>
           <div class="val-text">Multiple photographers for full coverage</div>
         </div>
@@ -693,16 +503,16 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   </div>
 </section>
 
-<!-- ═══ PACKAGES ═══ -->
+<!-- PACKAGES -->
 <section id="packages">
   <div class="pkg-in">
-    <div class="center-block">
+    <div class="center-block" data-aos="fade-up">
       <div class="section-tag" style="justify-content:center">Our Offerings</div>
       <h2 class="section-h">Photography <em>Packages</em></h2>
       <div class="gold-line"></div>
       <p style="color:var(--muted);font-size:0.9rem;margin-top:0.8rem">Choose the experience that matches your vision and budget</p>
     </div>
-    <div class="pkg-tabs">
+    <div class="pkg-tabs" data-aos="fade-up" data-aos-delay="100">
       <button class="pkg-tab on" onclick="switchPkg('wedding',this)">Wedding</button>
       <button class="pkg-tab" onclick="switchPkg('sendoff',this)">Send-off</button>
     </div>
@@ -710,11 +520,10 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
     <!-- WEDDING -->
     <div class="pkg-panel on" id="pkg-wedding">
       <div class="pkg-grid">
-        <!-- Essential -->
-        <div class="pk">
+        <div class="pk" data-aos="fade-up" data-aos-delay="100">
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1E1830,#130F20)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><circle cx="36" cy="36" r="30" stroke="#C8973A" stroke-width="1.2"/><path d="M22 36 L30 44 L50 26" stroke="#C8973A" stroke-width="1.8"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1a1a1a,#111)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><circle cx="36" cy="36" r="30" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/><path d="M22 36 L30 44 L50 26" stroke="rgba(255,255,255,0.3)" stroke-width="1.8"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Wedding · Essential</div>
@@ -722,20 +531,19 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">Simple. Beautiful. Memorable.</div>
             <div class="pk-price"><div class="pk-amt">TZS 900,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Album · 130 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao [1 print]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flash Drive [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Soft Copy [20 photos]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Album · 130 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao [1 print]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flash Drive [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Soft Copy [20 photos]</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Wedding · Classical Elegance — TZS 900,000','wedding')">Book This Package</button>
           </div>
         </div>
-        <!-- Premium -->
-        <div class="pk star">
+        <div class="pk star" data-aos="fade-up" data-aos-delay="200">
           <div class="pk-badge">Most Popular</div>
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#221845,#1c1235)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><path d="M36 8 L44 28 L66 28 L49 42 L56 62 L36 50 L16 62 L23 42 L6 28 L28 28 Z" stroke="#C8973A" stroke-width="1.5" fill="none"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1e1e1e,#151515)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><path d="M36 8 L44 28 L66 28 L49 42 L56 62 L36 50 L16 62 L23 42 L6 28 L28 28 Z" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Wedding · Premium</div>
@@ -743,21 +551,20 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">Capturing love without limits.</div>
             <div class="pk-price"><div class="pk-amt">TZS 1,600,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photobook A3 · 170 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao A3 [1] + A4 [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flat Screen Live [3 screens]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Video DVD [2] + Flash Disc [2]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Drone Footage (Pre-wedding & Send-off)</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photo Banner</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photobook A3 · 170 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao A3 [1] + A4 [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flat Screen Live [3 screens]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Video DVD [2] + Flash Disc [2]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Drone Footage (Pre-wedding & Send-off)</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photo Banner</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Wedding · Timeless Memories — TZS 1,600,000','wedding')">Book This Package</button>
           </div>
         </div>
-        <!-- Ultimate -->
-        <div class="pk">
+        <div class="pk" data-aos="fade-up" data-aos-delay="300">
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#180D2E,#1E1830)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><polygon points="36,6 48,28 72,32 56,50 60,74 36,62 12,74 16,50 0,32 24,28" stroke="#E8B96A" stroke-width="1.5" fill="none"/><circle cx="36" cy="36" r="8" stroke="#C8973A" stroke-width="1"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#151515,#1a1a1a)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><polygon points="36,6 48,28 72,32 56,50 60,74 36,62 12,74 16,50 0,32 24,28" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/><circle cx="36" cy="36" r="8" stroke="rgba(255,255,255,0.25)" stroke-width="1"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Wedding · Ultimate</div>
@@ -765,13 +572,13 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">The complete luxury experience.</div>
             <div class="pk-price"><div class="pk-amt">TZS 2,300,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photobook · 200 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao A3 [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flat Screen Live [4 screens]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Highlight Video [2 min reel]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Drone Aerial Coverage</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Video DVD [3] + Flash Disc [3]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Soft Copy [50] + Photo Booth</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photobook · 200 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao A3 [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flat Screen Live [4 screens]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Highlight Video [2 min reel]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Drone Aerial Coverage</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Video DVD [3] + Flash Disc [3]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Soft Copy [50] + Photo Booth</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Wedding · Royal Celebration — TZS 2,300,000','wedding')">Book This Package</button>
           </div>
@@ -782,10 +589,10 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
     <!-- SEND-OFF -->
     <div class="pkg-panel" id="pkg-sendoff">
       <div class="pkg-grid">
-        <div class="pk">
+        <div class="pk" data-aos="fade-up" data-aos-delay="100">
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1E1830,#130F20)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><circle cx="36" cy="32" r="16" stroke="white" stroke-width="1.2"/><path d="M20 58 Q36 48 52 58" stroke="white" stroke-width="1.2" fill="none"/><circle cx="36" cy="32" r="7" stroke="white" stroke-width="1"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1a1a1a,#111)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><circle cx="36" cy="32" r="16" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/><path d="M20 58 Q36 48 52 58" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/><circle cx="36" cy="32" r="7" stroke="rgba(255,255,255,0.25)" stroke-width="1"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Send-off · Essential</div>
@@ -793,19 +600,19 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">Celebrating new beginnings.</div>
             <div class="pk-price"><div class="pk-amt">TZS 900,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Album · 130 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao [1 print]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flash Drive [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Soft Copy [20 photos]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Album · 130 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao [1 print]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flash Drive [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Soft Copy [20 photos]</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Send-off · Sweet Farewell — TZS 900,000','sendoff')">Book This Package</button>
           </div>
         </div>
-        <div class="pk star">
+        <div class="pk star" data-aos="fade-up" data-aos-delay="200">
           <div class="pk-badge">Best Value</div>
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#221845,#1c1235)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><rect x="12" y="22" width="48" height="32" rx="4" stroke="#C8973A" stroke-width="1.5"/><circle cx="36" cy="38" r="10" stroke="#C8973A" stroke-width="1.5"/><circle cx="56" cy="28" r="4" stroke="#C8973A" stroke-width="1.5"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#1e1e1e,#151515)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><rect x="12" y="22" width="48" height="32" rx="4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><circle cx="36" cy="38" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><circle cx="56" cy="28" r="4" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Send-off · Premium</div>
@@ -813,20 +620,20 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">Moments worth remembering.</div>
             <div class="pk-price"><div class="pk-amt">TZS 1,600,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photobook A3 · 170 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao A3 [1] + A4 [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flat Screen Live [3 screens]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Video DVD [2] + Flash Disc [2]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Drone Footage included</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photo Banner</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photobook A3 · 170 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao A3 [1] + A4 [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flat Screen Live [3 screens]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Video DVD [2] + Flash Disc [2]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Drone Footage included</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photo Banner</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Send-off · Golden Journey — TZS 1,600,000','sendoff')">Book This Package</button>
           </div>
         </div>
-        <div class="pk">
+        <div class="pk" data-aos="fade-up" data-aos-delay="300">
           <div class="pk-img">
-            <div class="pk-img-bg" style="background:linear-gradient(145deg,#180D2E,#1E1830)"></div>
-            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><path d="M36 12 L50 32 L66 28 L52 48 L58 66 L36 56 L14 66 L20 48 L6 28 L22 32 Z" stroke="#C8973A" stroke-width="1.5" fill="none"/><circle cx="36" cy="40" r="7" stroke="#C8973A" stroke-width="1"/></svg>
+            <div class="pk-img-bg" style="background:linear-gradient(145deg,#151515,#1a1a1a)"></div>
+            <svg class="pk-img-icon" width="72" height="72" viewBox="0 0 72 72" fill="none"><path d="M36 12 L50 32 L66 28 L52 48 L58 66 L36 56 L14 66 L20 48 L6 28 L22 32 Z" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/><circle cx="36" cy="40" r="7" stroke="rgba(255,255,255,0.25)" stroke-width="1"/></svg>
           </div>
           <div class="pk-body">
             <div class="pk-cat">Send-off · Ultimate</div>
@@ -834,13 +641,13 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
             <div class="pk-tagline">Every memory captured.</div>
             <div class="pk-price"><div class="pk-amt">TZS 2,300,000</div><div class="pk-per">per event</div></div>
             <div class="pk-feats">
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Photobook · 200 photos</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Picha Mbao A3 [1]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Flat Screen Live [4 screens]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Highlight Video [2 min reel]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Drone Aerial Coverage</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Full Video DVD [3] + Flash Disc [3]</div>
-              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="#C8973A" stroke-width="1.5"/></svg></div>Soft Copy [50] + Photo Booth</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Photobook · 200 photos</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Picha Mbao A3 [1]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Flat Screen Live [4 screens]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Highlight Video [2 min reel]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Drone Aerial Coverage</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Full Video DVD [3] + Flash Disc [3]</div>
+              <div class="pk-feat"><div class="ck"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5L4 7L8 3"/></svg></div>Soft Copy [50] + Photo Booth</div>
             </div>
             <button class="pk-btn" onclick="prefillBooking('Send-off · Grand Departure — TZS 2,300,000','sendoff')">Book This Package</button>
           </div>
@@ -850,59 +657,71 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   </div>
 </section>
 
-<!-- ═══ GALLERY ═══ -->
-<section id="gallery">
-  <div class="gal-in">
-    <div class="center-block">
-      <div class="section-tag" style="justify-content:center">Our Work</div>
-      <h2 class="section-h">Photography <em>Portfolio</em></h2>
-      <div class="gold-line"></div>
-    </div>
-    <div class="gal-grid" id="galGrid"></div>
-  </div>
-</section>
-
-<!-- ═══ TESTIMONIALS ═══ -->
+<!-- TESTIMONIALS -->
 <section id="testimonials">
   <div class="testi-in">
-    <div class="center-block">
+    <div class="center-block" data-aos="fade-up">
       <div class="section-tag" style="justify-content:center">Client Love</div>
       <h2 class="section-h">What Our <em>Clients Say</em></h2>
       <div class="gold-line"></div>
     </div>
-    <div class="testi-grid">
-      <div class="tcard">
-        <div class="tcard-q">"</div>
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-body">Ngonachi Pix captured every single emotion of our wedding day. The photos brought us to tears — in the best possible way. We will treasure these forever.</p>
-        <div class="tcard-author"><div class="tcard-av">AM</div><div><div class="tcard-name">Amina & Musa Rashid</div><div class="tcard-evt">Wedding · Arusha, 2024</div></div></div>
+    <div class="swiper testimonials-swiper" data-aos="fade-up" data-aos-delay="100">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="tcard">
+            <div class="tcard-q">"</div>
+            <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <p class="tcard-body">Ngonachi Pix captured every single emotion of our wedding day. The photos brought us to tears — in the best possible way. We will treasure these forever.</p>
+            <div class="tcard-author"><div class="tcard-av">AM</div><div><div class="tcard-name">Amina & Musa Rashid</div><div class="tcard-evt">Wedding · Arusha, 2024</div></div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="tcard">
+            <div class="tcard-q">"</div>
+            <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <p class="tcard-body">The drone footage from our send-off was absolutely breathtaking. The whole team was professional, warm, and incredibly talented. Highly recommended!</p>
+            <div class="tcard-author"><div class="tcard-av">GN</div><div><div class="tcard-name">Grace & Nelson Kimaro</div><div class="tcard-evt">Send-off · Dar es Salaam, 2024</div></div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="tcard">
+            <div class="tcard-q">"</div>
+            <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <p class="tcard-body">We chose the Royal Celebration package and it exceeded every expectation. The photobook is a masterpiece. Our families still talk about these pictures.</p>
+            <div class="tcard-author"><div class="tcard-av">FJ</div><div><div class="tcard-name">Fatuma & James Osei</div><div class="tcard-evt">Wedding · Nairobi, 2023</div></div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="tcard">
+            <div class="tcard-q">"</div>
+            <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <p class="tcard-body">From the engagement shoot to the reception, every moment was captured beautifully. Ngonachi Pix made us feel so comfortable in front of the camera!</p>
+            <div class="tcard-author"><div class="tcard-av">SM</div><div><div class="tcard-name">Sarah & David Mwangi</div><div class="tcard-evt">Wedding · Moshi, 2024</div></div></div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="tcard">
+            <div class="tcard-q">"</div>
+            <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <p class="tcard-body">Our send-off was a dream come true, and the photos make us relive it every single day. Thank you, Ngonachi team, for your incredible artistry!</p>
+            <div class="tcard-author"><div class="tcard-av">EL</div><div><div class="tcard-name">Esther & Paul Lema</div><div class="tcard-evt">Send-off · Arusha, 2025</div></div></div>
+          </div>
+        </div>
       </div>
-      <div class="tcard">
-        <div class="tcard-q">"</div>
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-body">The drone footage from our send-off was absolutely breathtaking. The whole team was professional, warm, and incredibly talented. Highly recommended!</p>
-        <div class="tcard-author"><div class="tcard-av">GN</div><div><div class="tcard-name">Grace & Nelson Kimaro</div><div class="tcard-evt">Send-off · Dar es Salaam, 2024</div></div></div>
-      </div>
-      <div class="tcard">
-        <div class="tcard-q">"</div>
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-body">We chose the Royal Celebration package and it exceeded every expectation. The photobook is a masterpiece. Our families still talk about these pictures.</p>
-        <div class="tcard-author"><div class="tcard-av">FJ</div><div><div class="tcard-name">Fatuma & James Osei</div><div class="tcard-evt">Wedding · Nairobi, 2023</div></div></div>
-      </div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
-
-<!-- ═══ BOOKING ═══ -->
+<!-- BOOKING -->
 <section id="booking">
   <div class="bk-in">
-    <div class="center-block">
+    <div class="center-block" data-aos="fade-up">
       <div class="section-tag" style="justify-content:center">Reserve Your Date</div>
       <h2 class="section-h">Book Your <em>Session</em></h2>
       <div class="gold-line"></div>
       <p style="color:var(--muted);font-size:0.9rem;margin-top:0.8rem">Fill in the details and we'll confirm within 24 hours</p>
     </div>
-    <div class="bk-wrap">
+    <div class="bk-wrap" data-aos="fade-up" data-aos-delay="100">
       <div id="bkForm">
         <div class="form-row">
           <div class="fg" id="fg-name"><label class="fl">Full Name *</label><input type="text" class="fi" id="bk-name" placeholder="Your full name"><div class="fe">Please enter your full name</div></div>
@@ -937,26 +756,29 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
       <div class="bk-success" id="bkSuccess">
         <div class="bk-tick">✓</div>
         <div class="bk-ok-title">Booking Received!</div>
-        <p class="bk-ok-msg">Thank you! We've received your request and will confirm within <strong style="color:var(--gold)">24 hours</strong> via email and phone.<br><br>Reference: <strong style="color:var(--gold)" id="bkRef">—</strong></p>
+        <p class="bk-ok-msg">Thank you! We've received your request and will confirm within <strong style="color:var(--purple2)">24 hours</strong> via email and phone.<br><br>Reference: <strong style="color:var(--purple2)" id="bkRef">—</strong></p>
         <button class="btn-g" style="margin-top:2rem;display:inline-block" onclick="resetBooking()">Make Another Booking</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
+<!-- CONTACT -->
 <section id="contact">
   <div style="max-width:1300px;margin:0 auto;padding:0 2rem 1rem">
-    <div class="center-block">
+    <div class="center-block" data-aos="fade-up">
       <div class="section-tag" style="justify-content:center">Get In Touch</div>
       <h2 class="section-h">Let's <em>Connect</em></h2>
       <div class="gold-line"></div>
     </div>
   </div>
   <div class="ct-in" style="max-width:1200px;margin:0 auto;padding:0 2rem 5rem">
-    <div class="ct-info">
+    <div class="ct-info" data-aos="fade-right">
       <h3>We'd Love to Hear from You</h3>
       <p>Whether you're planning a wedding or send-off, or just have a question — reach out. We respond to all enquiries within 24 hours.</p>
+      <div class="ct-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255198.8678959421!2d36.58039564262911!3d-3.368859025164015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18371d8a0e1c3b3f%3A0x8e0e3c2f0c1f0e0!2sArusha%2C%20Tanzania!5e0!3m2!1sen!2s!4v1" width="100%" height="220" style="border:0;border-radius:var(--r2)" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
       <div class="ct-detail">
         <div class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91A16 16 0 0015.1 17.9l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
         <div><div class="ct-detail-lbl">Phone</div><div class="ct-detail-val">+255 621 018 229</div></div>
@@ -979,7 +801,7 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
         <a class="soc-btn" href="https://wa.me/255621018229" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
       </div>
     </div>
-    <div class="ct-form">
+    <div class="ct-form" data-aos="fade-left">
       <div class="ct-form-h">Send a Message</div>
       <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" id="ct-name" placeholder="Full name"></div>
       <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="ct-email" placeholder="email@example.com"></div>
@@ -990,7 +812,7 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer>
   <div class="ft-in">
     <div class="ft-top">
@@ -1030,7 +852,7 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   </div>
 </footer>
 
-<!-- ═══ ADMIN DASHBOARD (hidden, shows when logged in) ═══ -->
+<!-- ADMIN DASHBOARD -->
 <div id="admin">
   <div class="sb">
     <div class="sb-brand">
@@ -1112,17 +934,27 @@ footer{background:var(--ink2);color:rgba(248,244,255,0.55);padding:5rem 2rem 2re
   </div>
 </div>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+AOS.init({duration:800,once:true,offset:80,easing:'ease-out-cubic'});
+
+new Swiper('.testimonials-swiper',{slidesPerView:1,spaceBetween:24,pagination:{el:'.swiper-pagination',clickable:true},autoplay:{delay:5000,disableOnInteraction:false},loop:true,breakpoints:{768:{slidesPerView:2},1024:{slidesPerView:3}}});
+
+const counterObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.querySelectorAll('.hs-num').forEach(el=>{const target=parseInt(el.dataset.count);if(!target)return;let current=0;const increment=Math.ceil(target/60);const timer=setInterval(()=>{current+=increment;if(current>=target){current=target;clearInterval(timer)}el.textContent=current+(target>=1000?'+':'')},25)});counterObserver.unobserve(entry.target)}})},{threshold:0.5});
+const hsEl=document.querySelector('.hero-stats');if(hsEl)counterObserver.observe(hsEl);
+
+function filterGallery(filter){document.querySelectorAll('.gal-filter').forEach(f=>f.classList.remove('active'));const activeBtn=document.querySelector('.gal-filter[data-filter="'+filter+'"]');if(activeBtn)activeBtn.classList.add('active');document.querySelectorAll('.gal-item').forEach(item=>{if(filter==='all'||item.dataset.cat===filter){item.style.display='block'}else{item.style.display='none'}})}
+document.querySelectorAll('.gal-filter').forEach(btn=>{btn.addEventListener('click',function(){filterGallery(this.dataset.filter)})});
+
+document.addEventListener('click',function(e){const item=e.target.closest('.gal-item');if(item){const img=item.querySelector('img');if(img&&img.src){document.getElementById('lightboxImg').src=img.src;document.getElementById('lightbox').classList.add('show')}}});
+document.querySelector('.lb-close')?.addEventListener('click',function(){document.getElementById('lightbox').classList.remove('show')});
+document.getElementById('lightbox')?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
+
 const API='http://localhost:8000/api';
 let adminToken=localStorage.getItem('np_token')||null;
 let adminIn=false;
-
-const DB={
-  bookings:[],
-  messages:[]
-};
-
-// Gallery
+const DB={bookings:[],messages:[]};
 const GAL=[
   {cat:'wedding',title:'Ceremony Aisle',h:280,src:'images/w1.jpg'},
   {cat:'wedding',title:'Bridal Vows',h:360,src:'images/w2.jpg'},
@@ -1141,321 +973,36 @@ const GAL=[
 ];
 const PALS=[['#1E1830','#130F20'],['#0A0810','#1E1830'],['#221845','#1c1235'],['#180D2E','#1E1830'],['#0D1A1A','#1A2C2C'],['#1A1A1A','#2C2C2A']];
 
-function renderGallery(){
-  const g=document.getElementById('galGrid');
-  g.innerHTML=GAL.map((item,i)=>{
-    const p=PALS[i%PALS.length];
-    return `<div class="gal-item" data-cat="${item.cat}">
-      <img src="${item.src}" alt="${item.title}" style="height:${item.h}px;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="gal-ph" style="display:none;height:${item.h}px;background:linear-gradient(145deg,${p[0]},${p[1]})">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="22" rx="2" stroke="#C8973A" stroke-width="1" opacity="0.4"/><circle cx="18" cy="18" r="6" stroke="#C8973A" stroke-width="1" opacity="0.4"/></svg>
-      </div>
-      <div class="gal-ov"><div><div class="gal-ov-title">${item.title}</div><div class="gal-ov-cat">${item.cat==='wedding'?'Wedding':'Send-off'}</div></div></div>
-    </div>`;
-  }).join('');
-}
+function renderGallery(){const g=document.getElementById('galGrid');g.innerHTML=GAL.map((item,i)=>{const p=PALS[i%PALS.length];return'<div class="gal-item" data-cat="'+item.cat+'"><img src="'+item.src+'" alt="'+item.title+'" style="height:'+item.h+'px;object-fit:cover" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="gal-ph" style="display:none;height:'+item.h+'px;background:linear-gradient(145deg,'+p[0]+','+p[1]+')"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="22" rx="2" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/><circle cx="18" cy="18" r="6" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/></svg></div><div class="gal-ov"><div><div class="gal-ov-title">'+item.title+'</div><div class="gal-ov-cat">'+(item.cat==='wedding'?'Wedding':'Send-off')+'</div></div></div></div>'}).join('')}
 
-// NAV
-window.addEventListener('scroll',()=>{
-  const nav=document.getElementById('mainNav');
-  nav.classList.toggle('stuck',window.scrollY>60);
-
-  // Cinematic parallax on hero
-  const canvas=document.querySelector('.hero-canvas');
-  if(canvas){
-    const y=window.scrollY;
-    if(y<window.innerHeight){
-      canvas.style.transform=`translateY(${y*0.25}px) scale(${1+y*0.0003})`;
-    }
-  }
-});
-function toggleMenu(){
-  const m=document.getElementById('mobMenu');
-  m.classList.toggle('open');
-  m.style.display=m.classList.contains('open')?'flex':'none';
-}
-function closeMenu(){
-  const m=document.getElementById('mobMenu');
-  m.classList.remove('open');m.style.display='none';
-}
-
-// PACKAGES
-function switchPkg(type,btn){
-  document.querySelectorAll('.pkg-tab').forEach(t=>t.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.pkg-panel').forEach(p=>p.classList.remove('on'));
-  document.getElementById('pkg-'+type).classList.add('on');
-}
-
-function prefillBooking(pkgText,type){
-  document.getElementById('booking').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    const sel=document.getElementById('bk-pkg');
-    const tsel=document.getElementById('bk-type');
-    if(tsel)tsel.value=type;
-    if(sel){
-      for(let i=0;i<sel.options.length;i++){
-        if(sel.options[i].text===pkgText){sel.selectedIndex=i;break;}
-      }
-    }
-  },500);
-}
-
-// BOOKING
-function vf(id,fgId,test){
-  const el=document.getElementById(id);
-  const fg=document.getElementById(fgId);
-  const ok=test(el.value.trim());
-  fg.classList.toggle('err',!ok);
-  return ok;
-}
-async function submitBooking(){
-  const today=new Date().toISOString().split('T')[0];
-  let ok=true;
-  ok&=vf('bk-name','fg-name',v=>v.length>1);
-  ok&=vf('bk-phone','fg-phone',v=>/^[+\d\s\-]{8,}$/.test(v));
-  ok&=vf('bk-email','fg-email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-  ok&=vf('bk-type','fg-type',v=>v!=='');
-  ok&=vf('bk-pkg','fg-pkg',v=>v!=='');
-  ok&=vf('bk-date','fg-date',v=>v&&v>today);
-  ok&=vf('bk-location','fg-loc',v=>v.length>2);
-  if(!ok)return;
-  const btn=document.querySelector('.bk-btn');
-  btn.textContent='Submitting…';btn.disabled=true;
-  const payload={
-    client_name:document.getElementById('bk-name').value.trim(),
-    client_email:document.getElementById('bk-email').value.trim(),
-    client_phone:document.getElementById('bk-phone').value.trim(),
-    event_type:document.getElementById('bk-type').value,
-    package_id:parseInt(document.getElementById('bk-pkg').value),
-    event_date:document.getElementById('bk-date').value,
-    event_location:document.getElementById('bk-location').value.trim(),
-    notes:document.getElementById('bk-notes').value.trim(),
-  };
-  let ref='BK'+(100+DB.bookings.length+1).toString().padStart(3,'0');
-let realApiSuccess = false;
-
-try{
-  const res=await fetch(`${API}/bookings`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
-  const data=await res.json();
-  if(data.success){
-    ref=data.reference||ref;
-    realApiSuccess = true;
-    if(data.booking)DB.bookings.unshift({...data.booking,name:data.booking.client_name,email:data.booking.client_email,status:'pending'});
-  } else {
-    showToast(data.message || 'Booking failed. Please check your details.', 'err');
-    btn.textContent='Confirm Booking Request';btn.disabled=false;
-    return;
-  }
-}catch(e){
-  console.error('Booking API error:', e);
-  DB.bookings.unshift({id:DB.bookings.length+1,name:payload.client_name,email:payload.client_email,phone:payload.client_phone,type:payload.event_type,pkg:document.getElementById('bk-pkg').selectedOptions[0]?.text||'',date:payload.event_date,location:payload.event_location,notes:payload.notes,status:'pending',created:today});
-}
-
-document.getElementById('bkRef').textContent=ref;
-document.getElementById('bkForm').style.display='none';
-document.getElementById('bkSuccess').classList.add('show');
-
-if (realApiSuccess) {
-  showToast('Booking submitted! Check your email for confirmation.');
-} else {
-  showToast('Saved locally only — server unreachable. No email/SMS sent. Check Laravel is running.', 'err');
-}
-
-btn.textContent='Confirm Booking Request';btn.disabled=false;
-}
-function resetBooking(){
-  document.getElementById('bkForm').style.display='block';
-  document.getElementById('bkSuccess').classList.remove('show');
-  ['bk-name','bk-phone','bk-email','bk-location','bk-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  ['bk-type','bk-pkg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('bk-date').value='';
-  document.querySelectorAll('.fg').forEach(f=>f.classList.remove('err'));
-}
-
-// CONTACT
-function submitContact(){
-  const n=document.getElementById('ct-name').value.trim();
-  const e=document.getElementById('ct-email').value.trim();
-  const s=document.getElementById('ct-subj').value.trim();
-  const m=document.getElementById('ct-msg').value.trim();
-  if(!n||!e||!s||!m){showToast('Please fill in all fields.','err');return;}
-  DB.messages.unshift({id:'M'+(100+DB.messages.length+1),name:n,email:e,subject:s,message:m,date:new Date().toISOString().split('T')[0],read:false});
-  ['ct-name','ct-email','ct-subj','ct-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  showToast('Message sent! We\'ll get back to you shortly.');
-}
-
-// ADMIN
-function showAdminLogin(){
-  const ov=document.getElementById('admin-login');
-  ov.style.display='flex';ov.classList.add('show');
-  setTimeout(()=>document.getElementById('li-email').focus(),100);
-}
-function closeAdminLogin(){
-  const ov=document.getElementById('admin-login');
-  ov.style.display='none';ov.classList.remove('show');
-}
-async function doLogin(){
-  const email=document.getElementById('li-email').value.trim();
-  const pass=document.getElementById('li-pass').value.trim();
-  const btn=document.querySelector('#lp-login .login-btn');
-  const err=document.getElementById('li-err');
-  err.style.display='none';
-  if(!email||!pass){err.textContent='Please enter email and password.';err.style.display='block';return;}
-  btn.textContent='Signing in…';btn.disabled=true;
-  let ok=false;
-  try{
-    const ctl=new AbortController();setTimeout(()=>ctl.abort(),5000);
-    const res=await fetch(`${API}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,password:pass}),signal:ctl.signal});
-    const data=await res.json();
-    if(data.success){adminToken=data.token;localStorage.setItem('np_token',data.token);ok=true;}
-    else{err.textContent=data.message||'Invalid credentials.';err.style.display='block';}
-  }catch(e){
-    if(email==='ngonachi62@gmail.com'&&pass==='Ngonachi'){ok=true;}
-    else{err.textContent='Server offline. Use: ngonachi62@gmail.com / Ngonachi';err.style.display='block';}
-  }
-  if(ok){adminIn=true;closeAdminLogin();openAdminDash();}
-  btn.textContent='Sign In';btn.disabled=false;
-}
-document.getElementById('li-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-
-function openAdminDash(){
-  document.body.style.overflow='hidden';
-  const adm=document.getElementById('admin');
-  adm.classList.add('on');
-  adm.style.cssText='display:flex!important;flex-direction:row;min-height:100vh;position:fixed;inset:0;z-index:2000;';
-  renderDash();
-  if(adminToken)loadDashAPI();
-}
-function exitAdmin(){
-  adminIn=false;adminToken=null;localStorage.removeItem('np_token');
-  const adm=document.getElementById('admin');
-  adm.classList.remove('on');adm.style.cssText='display:none';
-  document.body.style.overflow='';
-}
-
+window.addEventListener('scroll',()=>{const nav=document.getElementById('mainNav');nav.classList.toggle('stuck',window.scrollY>60);const canvas=document.querySelector('.hero-canvas');if(canvas){const y=window.scrollY;if(y<window.innerHeight){canvas.style.transform='translateY('+(y*0.25)+'px) scale('+(1+y*0.0003)+')'}}});
+function toggleMenu(){const m=document.getElementById('mobMenu');m.classList.toggle('open');m.style.display=m.classList.contains('open')?'flex':'none'}
+function closeMenu(){const m=document.getElementById('mobMenu');m.classList.remove('open');m.style.display='none'}
+function switchPkg(type,btn){document.querySelectorAll('.pkg-tab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('.pkg-panel').forEach(p=>p.classList.remove('on'));document.getElementById('pkg-'+type).classList.add('on')}
+function prefillBooking(pkgText,type){document.getElementById('booking').scrollIntoView({behavior:'smooth'});setTimeout(()=>{const sel=document.getElementById('bk-pkg');const tsel=document.getElementById('bk-type');if(tsel)tsel.value=type;if(sel){for(let i=0;i<sel.options.length;i++){if(sel.options[i].text===pkgText){sel.selectedIndex=i;break}}}},500)}
+function vf(id,fgId,test){const el=document.getElementById(id);const fg=document.getElementById(fgId);const ok=test(el.value.trim());fg.classList.toggle('err',!ok);return ok}
+async function submitBooking(){const today=new Date().toISOString().split('T')[0];let ok=true;ok&=vf('bk-name','fg-name',v=>v.length>1);ok&=vf('bk-phone','fg-phone',v=>/^[+\d\s\-]{8,}$/.test(v));ok&=vf('bk-email','fg-email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));ok&=vf('bk-type','fg-type',v=>v!=='');ok&=vf('bk-pkg','fg-pkg',v=>v!=='');ok&=vf('bk-date','fg-date',v=>v&&v>today);ok&=vf('bk-location','fg-loc',v=>v.length>2);if(!ok)return;const btn=document.querySelector('.bk-btn');btn.textContent='Submitting…';btn.disabled=true;const payload={client_name:document.getElementById('bk-name').value.trim(),client_email:document.getElementById('bk-email').value.trim(),client_phone:document.getElementById('bk-phone').value.trim(),event_type:document.getElementById('bk-type').value,package_id:parseInt(document.getElementById('bk-pkg').value),event_date:document.getElementById('bk-date').value,event_location:document.getElementById('bk-location').value.trim(),notes:document.getElementById('bk-notes').value.trim()};let ref='BK'+(100+DB.bookings.length+1).toString().padStart(3,'0');let realApiSuccess=false;try{const res=await fetch(API+'/bookings',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});const data=await res.json();if(data.success){ref=data.reference||ref;realApiSuccess=true;if(data.booking)DB.bookings.unshift({...data.booking,name:data.booking.client_name,email:data.booking.client_email,status:'pending'})}else{showToast(data.message||'Booking failed. Please check your details.','err');btn.textContent='Confirm Booking Request';btn.disabled=false;return}}catch(e){console.error('Booking API error:',e);DB.bookings.unshift({id:DB.bookings.length+1,name:payload.client_name,email:payload.client_email,phone:payload.client_phone,type:payload.event_type,pkg:document.getElementById('bk-pkg').selectedOptions[0]?.text||'',date:payload.event_date,location:payload.event_location,notes:payload.notes,status:'pending',created:today})}document.getElementById('bkRef').textContent=ref;document.getElementById('bkForm').style.display='none';document.getElementById('bkSuccess').classList.add('show');if(realApiSuccess){showToast('Booking submitted! Check your email for confirmation.')}else{showToast('Saved locally only — server unreachable. No email/SMS sent. Check Laravel is running.','err')}btn.textContent='Confirm Booking Request';btn.disabled=false}
+function resetBooking(){document.getElementById('bkForm').style.display='block';document.getElementById('bkSuccess').classList.remove('show');['bk-name','bk-phone','bk-email','bk-location','bk-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});['bk-type','bk-pkg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});document.getElementById('bk-date').value='';document.querySelectorAll('.fg').forEach(f=>f.classList.remove('err'))}
+function submitContact(){const n=document.getElementById('ct-name').value.trim();const e=document.getElementById('ct-email').value.trim();const s=document.getElementById('ct-subj').value.trim();const m=document.getElementById('ct-msg').value.trim();if(!n||!e||!s||!m){showToast('Please fill in all fields.','err');return}DB.messages.unshift({id:'M'+(100+DB.messages.length+1),name:n,email:e,subject:s,message:m,date:new Date().toISOString().split('T')[0],read:false});['ct-name','ct-email','ct-subj','ct-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});showToast('Message sent! We\'ll get back to you shortly.')}
+function showAdminLogin(){const ov=document.getElementById('admin-login');ov.style.display='flex';ov.classList.add('show');setTimeout(()=>document.getElementById('li-email').focus(),100)}
+function closeAdminLogin(){const ov=document.getElementById('admin-login');ov.style.display='none';ov.classList.remove('show')}
+async function doLogin(){const email=document.getElementById('li-email').value.trim();const pass=document.getElementById('li-pass').value.trim();const btn=document.querySelector('#lp-login .login-btn');const err=document.getElementById('li-err');err.style.display='none';if(!email||!pass){err.textContent='Please enter email and password.';err.style.display='block';return}btn.textContent='Signing in…';btn.disabled=true;let ok=false;try{const ctl=new AbortController();setTimeout(()=>ctl.abort(),5000);const res=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,password:pass}),signal:ctl.signal});const data=await res.json();if(data.success){adminToken=data.token;localStorage.setItem('np_token',data.token);ok=true}else{err.textContent=data.message||'Invalid credentials.';err.style.display='block'}}catch(e){if(email==='ngonachi62@gmail.com'&&pass==='Ngonachi'){ok=true}else{err.textContent='Server offline. Use: ngonachi62@gmail.com / Ngonachi';err.style.display='block'}}if(ok){adminIn=true;closeAdminLogin();openAdminDash()}btn.textContent='Sign In';btn.disabled=false}
+document.getElementById('li-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+function openAdminDash(){document.body.style.overflow='hidden';const adm=document.getElementById('admin');adm.classList.add('on');adm.style.cssText='display:flex!important;flex-direction:row;min-height:100vh;position:fixed;inset:0;z-index:2000;';renderDash();if(adminToken)loadDashAPI()}
+function exitAdmin(){adminIn=false;adminToken=null;localStorage.removeItem('np_token');const adm=document.getElementById('admin');adm.classList.remove('on');adm.style.cssText='display:none';document.body.style.overflow=''}
 const DASH_TITLES={dash:'Dashboard Overview',bookings:'Booking Management',clients:'Client Directory',messages:'Client Messages'};
-function switchDash(panel,btn){
-  document.querySelectorAll('.sb-lnk').forEach(l=>l.classList.remove('on'));
-  if(btn)btn.classList.add('on');
-  document.querySelectorAll('.dp').forEach(p=>p.classList.remove('on'));
-  const el=document.getElementById('dp-'+panel);if(el)el.classList.add('on');
-  document.getElementById('dashTitle').textContent=DASH_TITLES[panel]||'';
-  if(panel==='bookings')renderBkTable();
-  else if(panel==='clients')renderClientsTable();
-  else if(panel==='messages')renderMsgsTable();
-}
-
-function nb(b){
-  return{
-    id:b.id||b.reference||'—',
-    ref:b.reference||b.id||'—',
-    name:b.client_name||b.name||'—',
-    email:b.client_email||b.email||'—',
-    phone:b.client_phone||b.phone||'—',
-    pkg:(b.package&&b.package.name)||b.pkg||'—',
-    type:b.event_type||b.type||'—',
-    date:b.event_date||b.date||'',
-    status:b.status||'pending',
-  };
-}
-
-function renderDash(){
-  const p=DB.bookings.filter(b=>b.status==='pending').length;
-  const c=DB.bookings.filter(b=>b.status==='confirmed').length;
-  const d=DB.bookings.filter(b=>b.status==='completed').length;
-  document.getElementById('m-total').textContent=DB.bookings.length;
-  document.getElementById('m-pending').textContent=p;
-  document.getElementById('m-confirmed').textContent=c;
-  document.getElementById('m-completed').textContent=d;
-  const t=document.getElementById('recentTable');
-  const rec=DB.bookings.slice(0,5).map(nb);
-  t.innerHTML=`<thead><tr><th>Ref</th><th>Client</th><th>Package</th><th>Date</th><th>Status</th></tr></thead><tbody>${rec.map(b=>`<tr><td style="color:var(--gold);font-weight:500">${b.ref}</td><td>${b.name}</td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.pkg}</td><td>${fd(b.date)}</td><td><span class="sb-wrap s-${b.status}">${b.status}</span></td></tr>`).join('')}</tbody>`;
-  const ul=document.getElementById('upcomingList');
-  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const up=DB.bookings.map(nb).filter(b=>b.status!=='rejected'&&b.status!=='completed').sort((a,c)=>a.date.localeCompare(c.date)).slice(0,5);
-  ul.innerHTML=up.map(b=>{const d=new Date(b.date+'T00:00:00');return`<div class="up-item"><div class="up-date"><div class="up-day">${d.getDate()}</div><div class="up-mon">${mo[d.getMonth()]}</div></div><div><div class="up-name">${b.name}</div><div class="up-pkg">${b.pkg}</div></div><span class="sb-wrap s-${b.status}">${b.status}</span></div>`;}).join('');
-}
-
-function renderBkTable(){
-  const filter=document.getElementById('bkFilter')?.value||'all';
-  const list=(filter==='all'?DB.bookings:DB.bookings.filter(b=>b.status===filter)).map(nb);
-  document.getElementById('bkCount').textContent=`${list.length} booking${list.length!==1?'s':''}`;
-  const t=document.getElementById('allBkTable');
-  t.innerHTML=`<thead><tr><th>Ref</th><th>Client</th><th>Phone</th><th>Package</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${list.map(b=>`<tr><td style="color:var(--gold);font-weight:500">${b.ref}</td><td><div style="font-weight:500">${b.name}</div><div style="font-size:0.72rem;color:var(--muted)">${b.email}</div></td><td style="font-size:0.8rem">${b.phone}</td><td style="max-width:150px;font-size:0.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.pkg}</td><td style="font-size:0.8rem;white-space:nowrap">${fd(b.date)}</td><td><span class="sb-wrap s-${b.status}">${b.status}</span></td><td style="white-space:nowrap;display:flex;gap:4px;flex-wrap:wrap">${b.status==='pending'?`<button class="ab approve-b" onclick="updBk(${b.id},'confirmed')">Approve</button><button class="ab reject-b" onclick="updBk(${b.id},'rejected')">Reject</button>`:''} ${b.status==='confirmed'?`<button class="ab complete-b" onclick="updBk(${b.id},'completed')">Complete</button>`:''}<button class="ab delete-b" onclick="delBk(${b.id})">Delete</button></td></tr>`).join('')}</tbody>`;
-}
-
-function renderClientsTable(){
-  const norm=DB.bookings.map(nb);
-  const clients=[...new Map(norm.map(b=>[b.email,b])).values()];
-  const t=document.getElementById('clientsTable');
-  t.innerHTML=`<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th></tr></thead><tbody>${clients.map(c=>`<tr><td style="font-weight:500">${c.name}</td><td style="color:var(--gold)">${c.email}</td><td>${c.phone}</td><td>${norm.filter(b=>b.email===c.email).length}</td></tr>`).join('')}</tbody>`;
-}
-
-function renderMsgsTable(){
-  const t=document.getElementById('msgsTable');
-  t.innerHTML=`<thead><tr><th>Date</th><th>From</th><th>Subject</th><th>Status</th></tr></thead><tbody>${DB.messages.map(m=>`<tr><td style="font-size:0.78rem;white-space:nowrap">${m.date}</td><td><div style="font-weight:500">${m.name}</div><div style="font-size:0.72rem;color:var(--muted)">${m.email}</div></td><td style="font-weight:${m.read?400:500}">${m.subject}</td><td><span class="sb-wrap ${m.read?'s-completed':'s-pending'}">${m.read?'Read':'Unread'}</span></td></tr>`).join('')}</tbody>`;
-}
-
-async function loadDashAPI(){
-  if(!adminToken)return;
-  try{
-    const res=await fetch(`${API}/admin/dashboard`,{headers:{'Authorization':`Bearer ${adminToken}`,'Accept':'application/json'}});
-    if(!res.ok)return;
-    const data=await res.json();
-    if(data.success){
-      document.getElementById('m-total').textContent=data.stats?.total||0;
-      document.getElementById('m-pending').textContent=data.stats?.pending||0;
-      document.getElementById('m-confirmed').textContent=data.stats?.confirmed||0;
-      document.getElementById('m-completed').textContent=data.stats?.completed||0;
-      if(data.recent&&data.recent.length)DB.bookings=data.recent;
-      renderDash();
-    }
-  }catch(e){}
-}
-
-async function updBk(id,status){
-  if(!confirm(`Mark as "${status}"?`))return;
-  try{
-    if(adminToken){
-      const res=await fetch(`${API}/admin/bookings/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json','Accept':'application/json','Authorization':`Bearer ${adminToken}`},body:JSON.stringify({status})});
-      const data=await res.json();
-      if(data.success){showToast(`Booking ${status}. Client notified.`);await loadDashAPI();renderBkTable();return;}
-    }
-  }catch(e){}
-  const b=DB.bookings.find(x=>x.id===id);if(b){b.status=status;renderBkTable();renderDash();showToast(`Saved locally.`);}
-}
-
-async function delBk(id){
-  if(!confirm('Delete this booking?'))return;
-  try{
-    if(adminToken){
-      const res=await fetch(`${API}/admin/bookings/${id}`,{method:'DELETE',headers:{'Accept':'application/json','Authorization':`Bearer ${adminToken}`}});
-      const data=await res.json();
-      if(data.success){DB.bookings=DB.bookings.filter(b=>b.id!==id);renderBkTable();renderDash();showToast('Deleted.');return;}
-    }
-  }catch(e){}
-  DB.bookings=DB.bookings.filter(b=>b.id!==id);renderBkTable();renderDash();showToast('Deleted locally.');
-}
-
-function fd(d){
-  if(!d)return'—';
-  const dt=new Date(d+'T00:00:00');
-  return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-}
-
-function showToast(msg,type='ok'){
-  const w=document.getElementById('toastWrap');
-  const t=document.createElement('div');t.className='toast';t.textContent=msg;
-  if(type==='err')t.style.borderLeftColor='#E05555';
-  w.appendChild(t);setTimeout(()=>t.remove(),3200);
-}
-
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('loader').classList.add('gone'),1400);
-  renderGallery();
-  const di=document.getElementById('bk-date');if(di)di.min=new Date().toISOString().split('T')[0];
-});
+function switchDash(panel,btn){document.querySelectorAll('.sb-lnk').forEach(l=>l.classList.remove('on'));if(btn)btn.classList.add('on');document.querySelectorAll('.dp').forEach(p=>p.classList.remove('on'));const el=document.getElementById('dp-'+panel);if(el)el.classList.add('on');document.getElementById('dashTitle').textContent=DASH_TITLES[panel]||'';if(panel==='bookings')renderBkTable();else if(panel==='clients')renderClientsTable();else if(panel==='messages')renderMsgsTable()}
+function nb(b){return{id:b.id||b.reference||'—',ref:b.reference||b.id||'—',name:b.client_name||b.name||'—',email:b.client_email||b.email||'—',phone:b.client_phone||b.phone||'—',pkg:(b.package&&b.package.name)||b.pkg||'—',type:b.event_type||b.type||'—',date:b.event_date||b.date||'',status:b.status||'pending'}}
+function renderDash(){const p=DB.bookings.filter(b=>b.status==='pending').length;const c=DB.bookings.filter(b=>b.status==='confirmed').length;const d=DB.bookings.filter(b=>b.status==='completed').length;document.getElementById('m-total').textContent=DB.bookings.length;document.getElementById('m-pending').textContent=p;document.getElementById('m-confirmed').textContent=c;document.getElementById('m-completed').textContent=d;const t=document.getElementById('recentTable');const rec=DB.bookings.slice(0,5).map(nb);t.innerHTML='<thead><tr><th>Ref</th><th>Client</th><th>Package</th><th>Date</th><th>Status</th></tr></thead><tbody>'+rec.map(b=>'<tr><td style="color:var(--purple2);font-weight:500">'+b.ref+'</td><td>'+b.name+'</td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+b.pkg+'</td><td>'+fd(b.date)+'</td><td><span class="sb-wrap s-'+b.status+'">'+b.status+'</span></td></tr>').join('')+'</tbody>';const ul=document.getElementById('upcomingList');const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const up=DB.bookings.map(nb).filter(b=>b.status!=='rejected'&&b.status!=='completed').sort((a,c)=>a.date.localeCompare(c.date)).slice(0,5);ul.innerHTML=up.map(b=>{const d=new Date(b.date+'T00:00:00');return'<div class="up-item"><div class="up-date"><div class="up-day">'+d.getDate()+'</div><div class="up-mon">'+mo[d.getMonth()]+'</div></div><div><div class="up-name">'+b.name+'</div><div class="up-pkg">'+b.pkg+'</div></div><span class="sb-wrap s-'+b.status+'">'+b.status+'</span></div>'}).join('')}
+function renderBkTable(){const filter=document.getElementById('bkFilter')?.value||'all';const list=(filter==='all'?DB.bookings:DB.bookings.filter(b=>b.status===filter)).map(nb);document.getElementById('bkCount').textContent=list.length+' booking'+(list.length!==1?'s':'');const t=document.getElementById('allBkTable');t.innerHTML='<thead><tr><th>Ref</th><th>Client</th><th>Phone</th><th>Package</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+list.map(b=>'<tr><td style="color:var(--purple2);font-weight:500">'+b.ref+'</td><td><div style="font-weight:500">'+b.name+'</div><div style="font-size:0.72rem;color:var(--muted)">'+b.email+'</div></td><td style="font-size:0.8rem">'+b.phone+'</td><td style="max-width:150px;font-size:0.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+b.pkg+'</td><td style="font-size:0.8rem;white-space:nowrap">'+fd(b.date)+'</td><td><span class="sb-wrap s-'+b.status+'">'+b.status+'</span></td><td style="white-space:nowrap;display:flex;gap:4px;flex-wrap:wrap">'+(b.status==='pending'?'<button class="ab approve-b" onclick="updBk('+b.id+',\'confirmed\')">Approve</button><button class="ab reject-b" onclick="updBk('+b.id+',\'rejected\')">Reject</button>':'')+' '+(b.status==='confirmed'?'<button class="ab complete-b" onclick="updBk('+b.id+',\'completed\')">Complete</button>':'')+'<button class="ab delete-b" onclick="delBk('+b.id+')">Delete</button></td></tr>').join('')+'</tbody>'}
+function renderClientsTable(){const norm=DB.bookings.map(nb);const clients=[...new Map(norm.map(b=>[b.email,b])).values()];const t=document.getElementById('clientsTable');t.innerHTML='<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Bookings</th></tr></thead><tbody>'+clients.map(c=>'<tr><td style="font-weight:500">'+c.name+'</td><td style="color:var(--purple2)">'+c.email+'</td><td>'+c.phone+'</td><td>'+norm.filter(b=>b.email===c.email).length+'</td></tr>').join('')+'</tbody>'}
+function renderMsgsTable(){const t=document.getElementById('msgsTable');t.innerHTML='<thead><tr><th>Date</th><th>From</th><th>Subject</th><th>Status</th></tr></thead><tbody>'+DB.messages.map(m=>'<tr><td style="font-size:0.78rem;white-space:nowrap">'+m.date+'</td><td><div style="font-weight:500">'+m.name+'</div><div style="font-size:0.72rem;color:var(--muted)">'+m.email+'</div></td><td style="font-weight:'+(m.read?400:500)+'">'+m.subject+'</td><td><span class="sb-wrap '+(m.read?'s-completed':'s-pending')+'">'+(m.read?'Read':'Unread')+'</span></td></tr>').join('')+'</tbody>'}
+async function loadDashAPI(){if(!adminToken)return;try{const res=await fetch(API+'/admin/dashboard',{headers:{'Authorization':'Bearer '+adminToken,'Accept':'application/json'}});if(!res.ok)return;const data=await res.json();if(data.success){document.getElementById('m-total').textContent=data.stats?.total||0;document.getElementById('m-pending').textContent=data.stats?.pending||0;document.getElementById('m-confirmed').textContent=data.stats?.confirmed||0;document.getElementById('m-completed').textContent=data.stats?.completed||0;if(data.recent&&data.recent.length)DB.bookings=data.recent;renderDash()}}catch(e){}}
+async function updBk(id,status){if(!confirm('Mark as "'+status+'"?'))return;try{if(adminToken){const res=await fetch(API+'/admin/bookings/'+id+'/status',{method:'PATCH',headers:{'Content-Type':'application/json','Accept':'application/json','Authorization':'Bearer '+adminToken},body:JSON.stringify({status})});const data=await res.json();if(data.success){showToast('Booking '+status+'. Client notified.');await loadDashAPI();renderBkTable();return}}}catch(e){}const b=DB.bookings.find(x=>x.id===id);if(b){b.status=status;renderBkTable();renderDash();showToast('Saved locally.')}}
+async function delBk(id){if(!confirm('Delete this booking?'))return;try{if(adminToken){const res=await fetch(API+'/admin/bookings/'+id,{method:'DELETE',headers:{'Accept':'application/json','Authorization':'Bearer '+adminToken}});const data=await res.json();if(data.success){DB.bookings=DB.bookings.filter(b=>b.id!==id);renderBkTable();renderDash();showToast('Deleted.');return}}}catch(e){}DB.bookings=DB.bookings.filter(b=>b.id!==id);renderBkTable();renderDash();showToast('Deleted locally.')}
+function fd(d){if(!d)return'—';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
+function showToast(msg,type='ok'){const w=document.getElementById('toastWrap');const t=document.createElement('div');t.className='toast';t.textContent=msg;if(type==='err')t.style.borderLeftColor='#E05555';w.appendChild(t);setTimeout(()=>t.remove(),3200)}
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('gone'),1400);renderGallery();const di=document.getElementById('bk-date');if(di)di.min=new Date().toISOString().split('T')[0]});
 </script>
 </body>
 </html>
