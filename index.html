@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Ngonachi Pix — Professional Wedding & Send-off Photography in Arusha, Tanzania.">
 <title>Ngonachi Pix | Wedding & Send-off Photography</title>
+<link rel="preload" href="images/w1.jpg" as="image" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
@@ -408,12 +409,7 @@ footer{background:var(--ink2);color:rgba(255,255,255,0.45);padding:5rem 2rem 2re
 
 <!-- MOBILE MENU -->
 <div class="mob-menu" id="mobMenu">
-  <a class="nav-a" href="#hero" onclick="closeMenu()">Home</a>
-  <a class="nav-a" href="#gallery" onclick="closeMenu()">Gallery</a>
-  <a class="nav-a" href="#about" onclick="closeMenu()">About</a>
-  <a class="nav-a" href="#packages" onclick="closeMenu()">Packages</a>
-  <a class="nav-a" href="#booking" onclick="closeMenu()">Book Now</a>
-  <a class="nav-a" href="#contact" onclick="closeMenu()">Contact</a>
+  
   <button class="nav-cta" onclick="showAdminLogin();closeMenu()">Admin Login</button>
 </div>
 
@@ -466,7 +462,7 @@ footer{background:var(--ink2);color:rgba(255,255,255,0.45);padding:5rem 2rem 2re
   <div class="about-in">
     <div class="about-visual" data-aos="fade-right">
       <div class="about-frame">
-        <img src="images/w4.jpg" alt="Ngonachi Pix photographer" class="about-frame-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="images/w4.jpg" alt="Ngonachi Pix photographer" class="about-frame-img" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="about-frame-placeholder" style="display:none">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none"><rect x="8" y="16" width="64" height="48" rx="4" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" opacity="0.4"/><circle cx="40" cy="40" r="14" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" opacity="0.4"/><circle cx="62" cy="22" r="4" fill="rgba(255,255,255,0.15)" opacity="0.3"/></svg>
         </div>
@@ -979,9 +975,9 @@ const GAL=[
 ];
 const PALS=[['#1E1830','#130F20'],['#0A0810','#1E1830'],['#221845','#1c1235'],['#180D2E','#1E1830'],['#0D1A1A','#1A2C2C'],['#1A1A1A','#2C2C2A']];
 
-function renderGallery(){const g=document.getElementById('galGrid');g.innerHTML=GAL.map((item,i)=>{const p=PALS[i%PALS.length];return'<div class="gal-item" data-cat="'+item.cat+'"><img src="'+item.src+'" alt="'+item.title+'" style="height:'+item.h+'px;object-fit:cover" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="gal-ph" style="display:none;height:'+item.h+'px;background:linear-gradient(145deg,'+p[0]+','+p[1]+')"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="22" rx="2" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/><circle cx="18" cy="18" r="6" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/></svg></div><div class="gal-ov"><div><div class="gal-ov-title">'+item.title+'</div><div class="gal-ov-cat">'+(item.cat==='wedding'?'Wedding':'Send-off')+'</div></div></div></div>'}).join('')}
+function renderGallery(){const g=document.getElementById('galGrid');g.innerHTML=GAL.map((item,i)=>{const p=PALS[i%PALS.length];return'<div class="gal-item" data-cat="'+item.cat+'"><img loading="lazy" decoding="async" src="'+item.src+'" alt="'+item.title+'" style="height:'+item.h+'px;object-fit:cover" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="gal-ph" style="display:none;height:'+item.h+'px;background:linear-gradient(145deg,'+p[0]+','+p[1]+')"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="7" width="30" height="22" rx="2" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/><circle cx="18" cy="18" r="6" stroke="rgba(255,255,255,0.2)" stroke-width="1" opacity="0.4"/></svg></div><div class="gal-ov"><div><div class="gal-ov-title">'+item.title+'</div><div class="gal-ov-cat">'+(item.cat==='wedding'?'Wedding':'Send-off')+'</div></div></div></div>'}).join('')}
 
-window.addEventListener('scroll',()=>{const nav=document.getElementById('mainNav');nav.classList.toggle('stuck',window.scrollY>60);const canvas=document.querySelector('.hero-canvas');if(canvas){const y=window.scrollY;if(y<window.innerHeight){canvas.style.transform='translateY('+(y*0.25)+'px) scale('+(1+y*0.0003)+')'}}});
+window.addEventListener('scroll',()=>{requestAnimationFrame(()=>{const nav=document.getElementById('mainNav');nav.classList.toggle('stuck',window.scrollY>60);const canvas=document.querySelector('.hero-canvas');if(canvas){const y=window.scrollY;if(y<window.innerHeight){canvas.style.transform='translateY('+(y*0.25)+'px) scale('+(1+y*0.0003)+')'}}})},{passive:true});
 function toggleMenu(){const m=document.getElementById('mobMenu');m.classList.toggle('open');m.style.display=m.classList.contains('open')?'flex':'none'}
 function closeMenu(){const m=document.getElementById('mobMenu');m.classList.remove('open');m.style.display='none'}
 function switchPkg(type,btn){document.querySelectorAll('.pkg-tab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('.pkg-panel').forEach(p=>p.classList.remove('on'));document.getElementById('pkg-'+type).classList.add('on')}
